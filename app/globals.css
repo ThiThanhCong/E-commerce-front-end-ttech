@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "SF-Pro", sans-serif;
+}
+
+html {
+	font-size: 62.5%;
+	background: #efeff1;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+.noneScrollBar::-webkit-scrollbar {
+	display: none;
+}
+
+.customScrollBar::-webkit-scrollbar {
+	display: block;
+	width: 4px;
+	height: 7px;
+	border-radius: 100%;
+	background: rgba(234, 36, 36, 0.206);
+	padding: 2px;
+}
+
+.customScrollBar::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.118);
+	background: #f1f1f1;
+}
+
+.customScrollBar::-webkit-scrollbar-thumb {
+	background: #888;
+	background: rgba(0, 0, 0, 0.547);
+	border-radius: 5px;
+}
+
+.customScrollBar::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.271);
+	background: #555;
+}
+
+/* -------------- */
+.item-category {
+	@apply flex items-center gap-2 cursor-pointer;
+}
+
+/* font-face */
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Ultralight.otf);
+	font-weight: 200;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Light.otf);
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Regular.otf);
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Medium.otf);
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Semibold.otf);
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Bold.otf);
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Heavy.otf);
+	font-weight: 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF-Pro";
+	src: url(../public/fonts/SF-Pro-Display-Black.otf);
+	font-weight: 900;
+	font-style: normal;
+}
+/* font-face */
+
+.title {
+	@apply font-[600] text-[3.2rem];
+}
+
+/* function */
+.display-2-line {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+}

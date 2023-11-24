@@ -1,0 +1,15 @@
+GET https://localhost:7176/api/products
+Content-Type: application/json
+
+###
+POST https://localhost:7176/api/User/register
+Content-Type: application/json 
+
+{
+  "user_id": "string",
+  "name": "string",
+  "email": "string",
+  "phone": "string",
+  "password": "string",
+  "isAdmin": "1"
+}
