@@ -19,13 +19,11 @@ const UserOrder = () => {
     const [showDetail, setShowDetail] = useState({})
     const [orderList, setOrderList] = useState([
         {
-            orderInfo: {
-                orderId: "d73d9714-22e3-4700-9631-ed6ae590a8e8",
-                createOrderAt: "2023-11-09T11:43:46",
-                userId: "001",
-                total: 3000000,
-            },
-            orderDetails: [
+            orderId: "d73d9714-22e3-4700-9631-ed6ae590a8e8",
+            createOrderAt: "2023-11-09T11:43:46",
+            userId: "001",
+            total: 3000000,
+            detail_order: [
                 {
                     product: {
                         product_id: "609bbadf-409f-48e0-9fff-4e2bea4b13f0",
@@ -33,12 +31,12 @@ const UserOrder = () => {
                         detail:
                             "Điện thoại rung mạnh, báo thức như còi xe tải. Siêu nặng và bền.",
                         price: 121212,
-                        images: [
+                        image: [
                             "https://localhost:7067/Upload/product/609bbadf-409f-48e0-9fff-4e2bea4b13f0/609bbadf-409f-48e0-9fff-4e2bea4b13f0_638351663329180378.webp",
                         ],
                     },
-                    quantityPr: 1,
-                    pricePr: 121212,
+                    quantity_pr: 1,
+                    price_pr: 121212,
                 },
                 {
                     product: {
@@ -47,12 +45,12 @@ const UserOrder = () => {
                         detail:
                             "On-ear headphones, Bluetooth 4.2, multipoint connection",
                         price: 3000000,
-                        images: [
+                        image: [
                             "https://localhost:7067/Upload/product/AKG001/AKG001_1.jpg",
                         ],
                     },
-                    quantityPr: 1,
-                    pricePr: 3000000,
+                    quantity_pr: 1,
+                    price_pr: 3000000,
                 },
             ],
         },
@@ -81,9 +79,10 @@ const UserOrder = () => {
     const getALlOrder = async () => {
         try {
             const result = await handleOrder.getOrderByUserId(
-                user.user_id,
+                user,
                 token
             )
+            console.log(result)
             setOrderList(result)
         } catch (error) {
             console.log(error)
@@ -127,7 +126,7 @@ const UserOrder = () => {
                                 variants={variant}
                                 initial='initial'
                                 animate={
-                                    showDetail[x.orderInfo.orderId]
+                                    showDetail[x.order_id]
                                         ? "active"
                                         : "initial"
                                 }
@@ -136,24 +135,24 @@ const UserOrder = () => {
                             >
                                 <motion.h1
                                     whileTap={{ color: "red" }}
-                                    onClick={() => copy(x.orderInfo.orderId)}
+                                    onClick={() => copy(x.order_id)}
                                     className='flex-1 shrink-0 flex items-center justify-center gap-2'
                                 >
-                                    {x.orderInfo.orderId.slice(0, 10)}...{" "}
+                                    {x?.order_id?.slice(0, 10)}...{" "}
                                     <IoCopyOutline size={15} />
                                 </motion.h1>
                                 <h1 className='flex-1 shrink-0 flex items-center justify-center'>
-                                    {convertDate(x.orderInfo.createOrderAt)}
+                                    {convertDate(x.order_id?.create_order_at)}
                                 </h1>
                                 <h1 className='flex-1 shrink-0 flex items-center justify-center'>
-                                    {convertToVND(x.orderInfo.total || 0)}
+                                    {convertToVND(x.total || 0)}
                                 </h1>
                                 <motion.h1
-                                    onClick={() => handleClick(x.orderInfo.orderId)}
+                                    onClick={() => handleClick(x.order_id)}
                                     className='flex-1 shrink-0 flex items-center justify-center'
                                 >
                                     <AnimatePresence>
-                                        {!showDetail[x.orderInfo.orderId] ? (
+                                        {!showDetail[x.order_id] ? (
                                             <motion.div
                                                 initial={{ opacity: 0 }}
                                                 whileInView={{ opacity: 1 }}
@@ -174,7 +173,7 @@ const UserOrder = () => {
                                 </motion.h1>
                             </motion.div>
                             <AnimatePresence>
-                                {showDetail[x.orderInfo.orderId] && (
+                                {showDetail[x.order_id] && (
                                     <motion.div
                                         initial={{ scaleY: 0.1, opacity: 0 }}
                                         whileInView={{ scaleY: 1, opacity: 1 }}
@@ -195,11 +194,11 @@ const UserOrder = () => {
                                             </div>
                                         </div>
 
-                                        {x.orderDetails?.map((y, j) => (
+                                        {x.detail_order.map((y, j) => (
                                             <div key={j} className='flex pt-6 pb-4'>
                                                 <div className='flex-1 text-center rounded-3xl'>
                                                     <img
-                                                        src={y.product.images[0]}
+                                                        src={y.product.image[0].image_path}
                                                         className='h-[70px] m-auto w-[70px] object-contain rounded-3xl'
                                                     />
                                                 </div>
@@ -208,10 +207,10 @@ const UserOrder = () => {
                                                 </div>
                                                 <div className='flex-[2] flex items-center text-center justify-center'>
                                                     {" "}
-                                                    {convertToVND(y.pricePr || 0)}{" "}
+                                                    {convertToVND(y.price_pr || 0)}{" "}
                                                 </div>
                                                 <div className='flex-[2] flex items-center text-center justify-center'>
-                                                    {y.quantityPr}{" "}
+                                                    {y.quantity_pr}{" "}
                                                 </div>
                                             </div>
                                         ))}
@@ -234,11 +233,16 @@ const variant = {
 }
 
 export const convertDate = (date) => {
-    const datePortion = date.slice(0, 10)
-    const [year, month, day] = datePortion.split("-")
-    const formattedDate = `${day}/${month}/${year}`
-    return formattedDate
-}
+    const datePortion = date ? date.slice(0, 10) : null;
+
+    if (datePortion) {
+        const [year, month, day] = datePortion.split("-");
+        const formattedDate = `${day}/${month}/${year}`;
+        return formattedDate;
+    } else {
+        return null; // hoặc một giá trị mặc định phù hợp với trường hợp của bạn
+    }
+};
 
 export function copy(text) {
     navigator.clipboard.writeText(text)

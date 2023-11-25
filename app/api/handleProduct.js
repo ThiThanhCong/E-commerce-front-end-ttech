@@ -28,7 +28,7 @@ export const handleProduct = {
 		),
 
 	updateProduct: async (data, token) =>
-		await axiosClient.put("/update/" + data.product_id, data,
+		await axiosClient.put("/product/update/" + data.product_id, data,
 			{
 				headers:
 					{ Authorization: `Bearer ${token}` },

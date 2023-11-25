@@ -113,7 +113,7 @@ const ProductSlide = ({
 							router.push("/products?categoryId=" + categoryId)
 						}}
 						className='text-blue-500 text-[1.1rem] flex
-             items-center underline z-50 underline-offset-2 mb-4 cursor-pointer'
+             items-center underline z-[29] underline-offset-2 mb-4 cursor-pointer'
 						href={""}
 					>
 						<div> Tìm hiểu thêm</div>{" "}

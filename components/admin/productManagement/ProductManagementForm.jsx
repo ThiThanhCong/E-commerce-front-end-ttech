@@ -25,7 +25,8 @@ const ProductManagementForm = ({
 	const [imageListDisplay, setImageListDisplay] = useState(
 		[]
 	)
-	const { token, user } = UserAuth;
+	const token = JSON.parse(localStorage.getItem('token'))
+	const user = JSON.parse(localStorage.getItem('user'))
 	const [data, setData] = useState({
 		product_id: currentProductChoose?.product_id,
 		name_pr: currentProductChoose?.name_pr,
@@ -150,11 +151,12 @@ const ProductManagementForm = ({
 
 		await handleProductCategory.updateProductCategory(
 			{
-				productId: product_id,
-				categoryId:
+				product_id: product_id,
+				category_id:
 					currentProductChoose?.category?.[0]?.category_id,
+				new_category_id: data.category_id
 			},
-			data.category_id
+			token
 		)
 		await handleProduct.updateProduct(updatedProduct, token)
 

@@ -43,13 +43,12 @@ const UserDataForm = () => {
 
 		let errorMessage = ""
 		if (!value.trim()) {
-			errorMessage = `Vui lòng nhập ${
-				id === "name"
-					? "tên"
-					: id === "email"
+			errorMessage = `Vui lòng nhập ${id === "name"
+				? "tên"
+				: id === "email"
 					? "email"
 					: "số điện thoại"
-			}`
+				}`
 		} else if (
 			id === "email" &&
 			!isValidEmail(value)
@@ -69,14 +68,9 @@ const UserDataForm = () => {
 		}))
 	}
 
-	const handleSexChange = (e) => {
-		setFormData((prevData) => ({
-			...prevData,
-			sex: e.target.value,
-		}))
-	}
 
-	const showInforCustomer = () => {}
+
+	const showInforCustomer = () => { }
 
 	useEffect(() => {
 		setIsValidFormData(
@@ -149,37 +143,6 @@ const UserDataForm = () => {
 						)}
 
 						<div></div>
-						<div className='self-center'>
-							<div className='flex items-center gap-2'>
-								<div className='pr-4'>Giới tính</div>
-								<div className='flex gap-1'>
-									<input
-										type='radio'
-										id='contactChoice1'
-										name='gioitinh'
-										value='Nam'
-										checked={formData.sex === "Nam"}
-										onChange={handleSexChange}
-									/>
-									<label htmlFor='contactChoice1'>
-										Nam
-									</label>
-								</div>
-								<div className='flex gap-1 ml-2'>
-									<input
-										type='radio'
-										id='contactChoice2'
-										name='gioitinh'
-										value='Nữ'
-										checked={formData.sex === "Nữ"}
-										onChange={handleSexChange}
-									/>
-									<label htmlFor='contactChoice2'>
-										Nữ
-									</label>
-								</div>
-							</div>
-						</div>
 						<motion.button
 							ref={buttonRef}
 							disabled={!isValidFormData}

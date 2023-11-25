@@ -9,12 +9,16 @@ import { FcGoogle } from "react-icons/fc"
 import { UserAuth } from "../context/AuthContext"
 import CircleLoader from "./CircleLoader"
 import PopupRegister from "./PopupRegister"
-import { UserCart } from "@/context/CartContex"
-import { axiosClient } from "@/app/api/axiosClient"
+import ForgetPassword from "./ForgetPassword"
+import { isValidPhoneNumber } from "@/utils/until"
 
 const LoginForm = () => {
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
+	const [verifyInput, setVerifyInput] = useState({
+		phone: "",
+		password: "",
+	})
 
 	const [data, setData] = useState({
 		phone: "",
@@ -30,25 +34,61 @@ const LoginForm = () => {
 		token,
 	} = UserAuth()
 
-	const { setTriggerRerender } = UserCart()
+	const verify = (id, value) => {
+		let errorMessage = ""
+		if (!value.trim()) {
+			errorMessage = `Vui lòng nhập ${id == "phone" ? "số điện thoại" : "mật khẩu"
+				}`
+		} else if (id === "phone" && !isValidPhoneNumber(value))
+			errorMessage = "Sai định dạng số điện thoại"
+
+		setVerifyInput((pre) => ({
+			...pre,
+			[id]: errorMessage,
+		}))
+
+		return errorMessage === ""
+	}
+
+	const handleInputChange = (e) => {
+		const { value, id } = e.target
+		verify(id, value)
+		setData((pre) => ({ ...pre, [id]: value }))
+	}
 
 	const handleLogin = async () => {
 		try {
+			const isOke =
+				verify("phone", data.phone) &&
+				verify("password", data.password)
+
+			console.log("isOke ", isOke)
+
+			if (!isOke) return
+
 			setLoading(true)
 			const res = await handleAuth.login(data)
-			const { user, token } = res
-			console.log(user);
-			setUser(user)
-			setToken(token)
-			setTriggerRerender(1)
-			router.push("/")
+
+			if (res?.token) {
+				const { user, token } = res
+				setUser(user)
+				setToken(token)
+				router.push("/")
+			} else {
+				setVerifyInput((pre) => ({
+					...pre,
+					password: "Sai thông tin đăng nhập",
+				}))
+			}
+
+			setLoading(false)
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
 	return (
-		<div className='p-[30px] w-[500px] mx-auto'>
+		<div className='p-[30px] md:w-[500px] mx-auto'>
 			<div className='flex gap-4 justify-center'>
 				<h1 className='text-[3rem] pt-[10px] font-[700] capitalize tracking-wide'>
 					Đăng nhập tài khoản{" "}
@@ -63,34 +103,29 @@ const LoginForm = () => {
 				</div>
 			</div>
 
-			<form
-				onSubmit={(e) => e.preventDefault()}
-				className='flex flex-col mt-2 gap-2'
-			>
+			<div className='flex flex-col mt-2 gap-2'>
 				{["phone", "password"].map((x, i) => (
-					<motion.input
-						required
-						type={x}
-						key={i}
-						whileFocus={{
-							scale: 1.05,
-							borderColor: "#3b82f6",
-						}}
-						value={data[x]}
-						onChange={(e) => {
-							setData((pre) => ({
-								...pre,
-								[x]: e.target.value,
-							}))
-						}}
-						placeholder={x}
-						className='w-full border-b-2  outline-none text-[2.5rem] font-[600] px-2'
-					/>
+					<div key={i}>
+						<motion.input
+							required
+							type={x}
+							id={x}
+							whileFocus={{
+								scale: 1.05,
+								borderColor: "#3b82f6",
+							}}
+							value={data[x]}
+							onChange={handleInputChange}
+							placeholder={x}
+							className='w-full border-b-2  outline-none text-[2.5rem] font-[600] px-2'
+						/>
+						<h3 className='text-red-500 text-xl mt-2'>
+							{verifyInput[x]}
+						</h3>
+					</div>
 				))}
 
-				<h1 className='text-blue-400 text-right font-[500] text-xl'>
-					Quên mật khẩu
-				</h1>
+				<ForgetPassword />
 
 				<motion.button
 					onClick={handleLogin}
@@ -104,7 +139,7 @@ const LoginForm = () => {
 				>
 					{loading ? <CircleLoader /> : "Đăng nhập"}
 				</motion.button>
-			</form>
+			</div>
 			<PopupRegister />
 			<div className='uppercase text-center text-[1.4em] font-[700] my-6'>
 				hoặc
