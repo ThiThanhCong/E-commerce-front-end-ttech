@@ -1,10 +1,11 @@
 import { axiosClient } from "./axiosClient"
 
 export const handleProductCategory = {
-	addNewProductCategory: async (data) =>
+	addNewProductCategory: async (data, token) =>
 		await axiosClient.post(
 			"/prodcate/AddNewProductCategory",
-			data
+			data,
+			{ headers: { Authorization: `Bearer ${token}` } }
 		),
 	updateProductCategory: async (
 		data,

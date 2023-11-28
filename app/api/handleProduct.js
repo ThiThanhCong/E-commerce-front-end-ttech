@@ -4,6 +4,13 @@ export const handleProduct = {
 	getProduct: async (filter) =>
 		await axiosClient.post("/product/getProduct", filter),
 
+	addNewProduct: async (data, token) =>
+		await axiosClient.post("/product/createProduct", data,
+			{
+				headers: { Authorization: `Bearer ${token}` }
+			}
+		),
+
 	getProductBySearchParam: async (filter) =>
 		await axiosClient.post(
 			"/product/getProduct",
@@ -35,10 +42,32 @@ export const handleProduct = {
 			}
 		),
 
-	deleteImageOfProduct: async (id, image_path) =>
-		await axiosClient.post("/deleteImage/" + id, image_path,
+	deleteImageOfProduct: async (data, token) =>
+		await axiosClient.post("/product/deleteImage", data,
 			{
 				headers:
-					{ Authorization: `Bearer ${token}` },
+				{
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
 			}),
+	addImage: async (data) =>
+		await axiosClient.post(
+			"/product/addImageToProduct",
+			data,
+			{
+				headers: {
+					Accept: "application/json",
+					"Accept-Language": "en-US,en;q=0.8",
+					"Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+				},
+			}
+		),
+	deleteProduct: async (product_id, token) =>
+		await axiosClient.delete(
+			"/product/delete/" + product_id, {
+			headers: { Authorization: `Bearer ${token}` },
+			"Content-Type": "application/json",
+		}
+		),
 }

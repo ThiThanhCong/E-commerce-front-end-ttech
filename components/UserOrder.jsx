@@ -240,7 +240,7 @@ export const convertDate = (date) => {
         const formattedDate = `${day}/${month}/${year}`;
         return formattedDate;
     } else {
-        return null; // hoặc một giá trị mặc định phù hợp với trường hợp của bạn
+        return null;
     }
 };
 

@@ -38,14 +38,13 @@ const AddProduct = ({
 	const [imageListDisplay, setImageListDisplay] = useState(
 		[]
 	)
+	const token = JSON.parse(localStorage.getItem('token'))
 
 	const addNewProduct = async (e) => {
 		try {
-			const product_id = uuidv4()
 			const imageList = [...fileImage]
 
 			const productDetail = {
-				product_id: product_id,
 				name_pr: data.name_pr,
 				name_serial: data.name_serial,
 				detail: data.detail,
@@ -57,25 +56,29 @@ const AddProduct = ({
 				supplier_id: data.supplier_id,
 			}
 
+			const productId = await handleProduct.addNewProduct(productDetail, token)
+
 			const productCategory = {
-				productId: product_id,
-				categoryId: data.category_id,
+				product_id: productId,
+				category_id: data.category_id,
 			}
 
 			const formData = new FormData()
 
 			for (let i = 0; i < imageList.length; i++) {
-				formData.append(
-					"formFileCollection",
-					imageList[i],
-					imageList[i].name
-				)
-			}
+				const file = imageList[i];
+				const formData = new FormData();
+				formData.append('image_path', file);
+				formData.append('product_id', productId);
 
-			await handleProduct.addNewProduct(productDetail)
-			await handleProduct.addImage(formData, product_id)
+				try {
+					await handleProduct.addImage(formData);
+				} catch (error) {
+					console.error(error);
+				}
+			}
 			await handleProductCategory.addNewProductCategory(
-				productCategory
+				productCategory, token
 			)
 
 			setTrigger((pre) => !pre)

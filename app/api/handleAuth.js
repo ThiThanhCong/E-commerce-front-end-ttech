@@ -9,4 +9,13 @@ export const handleAuth = {
 	login: async (formData) =>
 		await axiosClient.post("/auth/login", formData),
 
+	checkAdminUser: async (token) =>
+		await axiosClient.get(
+			"/auth/userAdmin", {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			}
+		}
+		),
 }

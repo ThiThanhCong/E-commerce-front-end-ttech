@@ -89,10 +89,14 @@ const ProductManagementForm = ({
 					" of product whose id: ",
 					x.product_id
 				)
-
+				const deleteInfo = {
+					product_id: x.product_id,
+					image_path: x.image_path
+				}
+				console.log(deleteInfo)
 				await handleProduct.deleteImageOfProduct(
-					x.product_id,
-					x.file_name
+					deleteInfo,
+					token
 				)
 				setTriggerImage((pre) => !pre)
 			}
@@ -124,15 +128,22 @@ const ProductManagementForm = ({
 		if (imageList.length !== 0) {
 			console.log("update image")
 			const formData = new FormData()
-
-			for (let i = 0; i < imageList.length; i++) {
-				formData.append(
-					"formFileCollection",
-					imageList[i],
-					imageList[i].name
-				)
+			const data = {
+				image_path: "",
+				product_id: product_id
 			}
-			await handleProduct.addImage(formData, product_id)
+			for (let i = 0; i < imageList.length; i++) {
+				const file = imageList[i];
+				const formData = new FormData();
+				formData.append('image_path', file);
+				formData.append('product_id', product_id);
+
+				try {
+					await handleProduct.addImage(formData, product_id);
+				} catch (error) {
+					console.error(error);
+				}
+			}
 			setImageListDisplay([])
 			setImageFile([])
 			setTriggerImage((pre) => !pre)
@@ -234,7 +245,7 @@ const ProductManagementForm = ({
 
 									reader.onload = () => {
 										const imageData = {
-											name: file.name,
+											name: file,
 											dataUrl: reader.result,
 										}
 										resolve(imageData)
@@ -355,7 +366,7 @@ const ProductManagementForm = ({
 						id='category_id'
 						onChange={handleProductValueChange}
 					>
-						{category.map((x, i) => (
+						{category?.map((x, i) => (
 							<option
 								selected={
 									currentProductChoose?.category?.[0]
@@ -378,7 +389,7 @@ const ProductManagementForm = ({
 						id='supplier_id'
 						onChange={handleProductValueChange}
 					>
-						{supplier.map((x, i) => (
+						{supplier?.map((x, i) => (
 							<option
 								selected={
 									currentProductChoose?.suppliers?.supplier_id ===
