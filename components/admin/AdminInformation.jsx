@@ -1,14 +1,7 @@
 "use client"
 
-import {
-	AnimatePresence,
-	motion,
-} from "framer-motion"
-import {
-	useEffect,
-	useRef,
-	useState,
-} from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 import { CiBellOn } from "react-icons/ci"
 
 const AdminInformation = () => {
@@ -50,7 +43,7 @@ const AdminInformation = () => {
 	}, [showList])
 
 	return (
-		<div className='fixed right-10 top-5 w-[200px]'>
+		<div className='fixed right-10 top-5 z-10 w-[200px]'>
 			<div className='flex right-0 absolute items-center'>
 				<div
 					onClick={() => setShowList((pre) => !pre)}

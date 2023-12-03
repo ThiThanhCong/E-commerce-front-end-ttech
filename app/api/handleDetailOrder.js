@@ -13,4 +13,8 @@ export const handleDetailOrder = {
 				},
 			}
 		),
+	getOrderDetailByOrderId: async (orderId) =>
+		axiosClient.get(
+			"/detailOrder/GetOrderDetailByOrderID/" + orderId
+		),
 }

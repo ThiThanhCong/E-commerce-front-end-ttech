@@ -14,34 +14,7 @@ import { UserAuth } from "@/context/AuthContext"
 
 const AdminProductManagement = () => {
 	const [currentProductChoose, setCurrentProductChoose] =
-		useState({
-			product: {
-				product_id: "PRD005",
-				name_pr: "Apple MacBook Air",
-				name_serial: "MA007",
-				detail:
-					"13.3-inch Retina display, Apple M1 chip, 8GB RAM, 256GB SSD, macOS",
-				price: 17000000,
-				quantity_pr: 25,
-				guarantee_period: 12,
-			},
-			categories: [
-				{
-					category_id: "qRsTuV4wXyZ56789",
-					category_name: "Laptop",
-				}
-			],
-			supplier: {
-				supplier_id: "SUPLLIER002",
-				supplier_name: "Apple",
-			},
-			image: {
-				image_id: "PRD005001",
-				product_id: "PRD005",
-				image_href:
-					"https://localhost:7067/Upload/product/PRD005/PRD005_1.jpg",
-			},
-		})
+		useState({})
 
 	const [filter, setFilter] = useState({
 		pageNumber: 1,

@@ -7,13 +7,12 @@ export const adminRouteNavigator = [
 	"order",
 	"customer",
 	"message",
-	"voucher",
+	"discount",
+	"supplier",
+	"category",
 ]
 
-const AdminNavigator = ({
-	route,
-	onRouteChange,
-}) => {
+const AdminNavigator = ({ route, onRouteChange }) => {
 	return (
 		<div className='mx-4 mt-4'>
 			<div className='flex justify-between items-center'>
@@ -25,9 +24,7 @@ const AdminNavigator = ({
 						height={30}
 						style={{ objectFit: "contain" }}
 					/>
-					<h1 className='text-[1.7rem] font-[800]'>
-						T-TECH
-					</h1>
+					<h1 className='text-[1.7rem] font-[800]'>T-TECH</h1>
 				</div>
 				<ul className=' flex capitalize text-[1.4rem] gap-5 items-center'>
 					{adminRouteNavigator.map((x, i) => (

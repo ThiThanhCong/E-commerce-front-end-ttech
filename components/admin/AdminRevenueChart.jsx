@@ -15,6 +15,8 @@ import {
 import { useEffect, useState } from "react"
 import { Line } from "react-chartjs-2"
 import { CiWavePulse1 } from "react-icons/ci"
+import { UserAuth } from "@/context/AuthContext"
+
 
 ChartJS.register(
 	CategoryScale,
@@ -74,13 +76,15 @@ export const data_week = {
 }
 
 const AdminRevenueChart = () => {
+	const { user, token } = UserAuth();
+	console.log(token)
 	const [choose, setChoose] = useState("Y")
 	const [data, setData] = useState(data_week)
 
 	const getRevenueByYear = async () => {
 		try {
 			const { labels, revenues } =
-				await handleAdmin.GetRevenueByYear(2023)
+				await handleAdmin.GetRevenueByYear(2023, token)
 			const data_year = {
 				labels,
 				datasets: [
@@ -92,19 +96,19 @@ const AdminRevenueChart = () => {
 				],
 			}
 			setData(data_year)
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	const getRevenueByWeek = async () => {
 		try {
-			const { labels, revenues } =
-				await handleAdmin.GetRevenueByWeek()
+			const { day, revenue } =
+				await handleAdmin.GetRevenueByWeek(token)
 			const data_week = {
-				labels,
+				labels: day,
 				datasets: [
 					{
 						label: "Doanh thu theo tuần",
-						data: revenues,
+						data: revenue,
 						backgroundColor: "#93c5fd",
 					},
 				],

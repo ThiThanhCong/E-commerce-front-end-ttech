@@ -17,4 +17,25 @@ export const handleOrder = {
 				Authorization: `Bearer ${token}`,
 			},
 		}),
+
+	getAllOrder: async (token) =>
+		await axiosClient.get("/order/GetAllOrder",
+			{
+				headers: { Authorization: `Bearer ${token}` }
+			}
+		),
+	updateStateOrder: async (order_id, state, token) =>
+		await axiosClient.put(
+			"/order/UpdateStateOrder?orderId=" +
+			order_id +
+			"&state=" +
+			state
+			, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+	getExcelFile: async () =>
+		await axiosClient.get("/order/GetExcelFileData"),
 }

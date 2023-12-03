@@ -111,7 +111,7 @@ export function isValidPhoneNumber(phoneNumber) {
 }
 
 export const convertToVND = (money) => {
-	return money.toLocaleString("it-IT", {
+	return money?.toLocaleString("it-IT", {
 		style: "currency",
 		currency: "VND",
 	})
@@ -134,9 +134,8 @@ export function getCurrentDate(separator = "") {
 	let month = newDate.getMonth() + 1
 	let year = newDate.getFullYear()
 
-	return `${dayOfWeek} ${date}${separator}${
-		month < 10 ? `0${month}` : `${month}`
-	}${separator}${year}`
+	return `${dayOfWeek} ${date}${separator}${month < 10 ? `0${month}` : `${month}`
+		}${separator}${year}`
 }
 
 export function getCurrentMonth() {
