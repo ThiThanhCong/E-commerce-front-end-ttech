@@ -1,4 +1,5 @@
 import { handleAdmin } from "@/app/api/handleAdmin"
+import { UserAuth } from "@/context/AuthContext"
 import { useEffect, useState } from "react"
 import { CiShoppingBasket, CiUser } from "react-icons/ci"
 
@@ -7,11 +8,11 @@ const CountingInfor = () => {
 		user: 0,
 		order: 0,
 	})
-
+	const token = JSON.parse(localStorage.getItem('token'))
 	const getTotalInfor = async () => {
 		try {
-			const user = await handleAdmin.GetTotalCustomer()
-			const order = await handleAdmin.GetTotalOrder()
+			const user = await handleAdmin.GetTotalCustomer(token)
+			const order = await handleAdmin.GetTotalOrder(token)
 
 			setInfor({
 				user,

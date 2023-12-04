@@ -16,6 +16,7 @@ const DetailOrder = ({
 
 	const [orderDetailList, setOrderDetailList] = useState([])
 
+	const token = JSON.parse(localStorage.getItem('token'))
 	const handleValueChange = (e) => {
 		const { id, value } = e.target
 		if (id === "state") {
@@ -35,9 +36,14 @@ const DetailOrder = ({
 	}, [])
 
 	const handleSubmit = async () => {
-		const order_id = currentOrderClick.order_id
-		const state = data.state
-		await handleOrder.updateStateOrder(order_id, state)
+		const orderId = currentOrderClick.order_id;
+		const State = data.state;
+		const realData = {
+			order_id: orderId,
+			state: State
+		};
+
+		await handleOrder.updateStateOrder(realData, token)
 		setCurrentOrderClick({})
 		setTrigger((pre) => !pre)
 	}

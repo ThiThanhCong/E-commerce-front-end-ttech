@@ -3,7 +3,7 @@ import { axiosClient } from "./axiosClient"
 export const handleAdmin = {
 	GetRevenueByYear: async (year, token) =>
 		await axiosClient.get(
-			"/admin/GetRevenueByYear?" + year
+			"/admin/getRevenueByYear/" + year
 			, {
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -18,7 +18,7 @@ export const handleAdmin = {
 		}),
 	GetTopSellerProduct: async (count, token) =>
 		await axiosClient.get(
-			"/Admin/GetTopSellerProduct?count=" + count
+			"/admin/GetTopSellerProduct/" + count
 			, {
 				headers: {
 					Authorization: `Bearer ${token}`,

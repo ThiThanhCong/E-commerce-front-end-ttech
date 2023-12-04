@@ -5,6 +5,7 @@ import { CiShoppingBasket } from "react-icons/ci"
 
 const BestSellProduct = () => {
 	const [top, setTop] = useState(1)
+	const token = JSON.parse(localStorage.getItem('token'))
 	const [list, setList] = useState([
 		{
 			productId: "609bbadf-409f-48e0-9fff-4e2bea4b13f0",
@@ -21,7 +22,8 @@ const BestSellProduct = () => {
 
 	const getProductTop = async () => {
 		const result = await handleAdmin.GetTopSellerProduct(
-			debounce
+			debounce,
+			token
 		)
 		console.log("GetTopSellerProduct ", result)
 		setList(result)
@@ -62,17 +64,17 @@ const BestSellProduct = () => {
 						<div key={i} className='flex gap-4 '>
 							<div className='flex-1 p-2 flex items-center justify-center'>
 								<img
-									src={x.image.image_href}
+									src={x.image}
 									alt=''
 									width={70}
 									height={70}
 								/>
 							</div>
 							<div className='flex-1 p-2 flex text-xl items-center justify-center text-center'>
-								{x.productName}
+								{x.product_name}
 							</div>
 							<div className='flex-1 p-2 flex text-xl items-center justify-center'>
-								{x.totalQuantitySold}
+								{x.total_quantity_sold}
 							</div>
 						</div>
 					)

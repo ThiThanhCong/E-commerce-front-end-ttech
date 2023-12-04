@@ -10,7 +10,7 @@ import { UserAuth } from "@/context/AuthContext"
 
 const AdminOrderManagement = () => {
 
-	const { token, user } = UserAuth();
+	const token = JSON.parse(localStorage.getItem('token'))
 	const [orderList, setOrderList] = useState([{
 		order_id: "321312",
 		user_id: "UserEFM",

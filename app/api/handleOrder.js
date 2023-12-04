@@ -24,12 +24,9 @@ export const handleOrder = {
 				headers: { Authorization: `Bearer ${token}` }
 			}
 		),
-	updateStateOrder: async (order_id, state, token) =>
+	updateStateOrder: async (data, token) =>
 		await axiosClient.put(
-			"/order/UpdateStateOrder?orderId=" +
-			order_id +
-			"&state=" +
-			state
+			"/order/UpdateStateOrder", data
 			, {
 				headers: {
 					"Content-Type": "application/json",
