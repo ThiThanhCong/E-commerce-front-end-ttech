@@ -13,13 +13,13 @@ const CategoryForm = ({
 	triggerGetData,
 	setTriggerGetData,
 }) => {
+	const token = JSON.parse(localStorage.getItem('token'))
 	const handleSubmit = async (e) => {
 		if (mode === "add") {
 			const newCategory = {
-				category_id: uuidv4(),
 				category_name: currentCategoryClicked.category_name,
 			}
-			const res = await handleCategory.addCategory(newCategory)
+			const res = await handleCategory.addCategory(newCategory, token)
 			console.log(res)
 		} else {
 			const updatedCategory = {
@@ -27,7 +27,9 @@ const CategoryForm = ({
 				category_name: currentCategoryClicked.category_name,
 			}
 			const res = await handleCategory.updateCategory(
-				updatedCategory
+				updatedCategory.category_id,
+				updatedCategory,
+				token
 			)
 			console.log(res)
 		}
@@ -44,7 +46,8 @@ const CategoryForm = ({
 		const isSure = prompt("Nhập vào '1' để xóa")
 		if (isSure == "1") {
 			await handleCategory.deleteCategory(
-				currentCategoryClicked.category_id
+				currentCategoryClicked.category_id,
+				token
 			)
 
 			setCurrentCategoryClicked({

@@ -2,7 +2,9 @@ import { axiosClient } from "./axiosClient"
 
 export const handleUser = {
     getAllUser: async (token) =>
-        await axiosClient.get("/auth/index"),
+        await axiosClient.get("/auth/index", {
+            headers: { Authorization: `Bearer ${token}` }
+        }),
     forgetPassword: async (email) =>
         await axiosClient.post("/sendmail/ForgetPassword/" + email, {
             headers: { "Content-Type": "application/json" },

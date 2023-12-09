@@ -21,10 +21,12 @@ const AdminCustomerManagement = () => {
 	])
 	const getData = async () => {
 		const result = await handleUser.getAllUser(token)
+		console.log(result)
 		setUserList(result)
 	}
 
 	useEffect(() => {
+		console.log("RUNNNNNNNNN")
 		getData()
 	}, [])
 

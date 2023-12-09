@@ -360,7 +360,7 @@ const ProductManagementForm = ({
 
 				<motion.div className='flex gap-2 w-full'>
 					<label className='min-w-[170px] text-black/50'>
-						Doanh mục
+						Danh mục
 					</label>
 					<select
 						id='category_id'
