@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.1.0",
-    "axios": "^1.5.1",
+    "axios": "^1.6.2",
     "chart.js": "^4.4.0",
+    "file-saver": "^2.0.5",
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
     "next": "^14.0.1",

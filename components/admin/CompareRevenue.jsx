@@ -17,7 +17,7 @@ import { UserAuth } from "@/context/AuthContext"
 const CompareRevenue = () => {
 	const token = JSON.parse(localStorage.getItem('token'))
 	const [revenue, setRevenue] = useState({
-		thisMonthRevenue: 144282727,
+		thisMonthRevenue: 132314256,
 		lastMonthRevenue: 0,
 		percentDifference: 100,
 	})

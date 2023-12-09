@@ -108,19 +108,19 @@ export const AuthContextProvider = ({ children }) => {
 		signOut(auth)
 	}
 
-	// useEffect(() => {
-	// 	try {
-	// 		const storedUser = JSON.parse(localStorage.getItem('user'))
-	// 		const storedToken = JSON.parse(localStorage.getItem('token'))
-	// 		console.log(user)
-	// 		if (storedUser && storedToken) {
-	// 			setUser(storedUser)
-	// 			setToken(storedToken)
-	// 		}
-	// 	} catch (e) {
-	// 		console.log(e)
-	// 	}
-	// }, [])
+	useEffect(() => {
+		try {
+			const storedUser = JSON.parse(localStorage.getItem('user'))
+			const storedToken = JSON.parse(localStorage.getItem('token'))
+			console.log(user)
+			if (storedUser && storedToken) {
+				setUser(storedUser)
+				setToken(storedToken)
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}, [])
 	useEffect(() => {
 		try {
 			if (!user && localStorage.getItem("user")) {

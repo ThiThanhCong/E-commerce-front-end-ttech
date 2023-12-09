@@ -2,6 +2,7 @@
 
 import { BASE_URL } from "@/constants/constant"
 import https from "https"
+import { saveAs } from 'file-saver';
 const { default: axios } = require("axios")
 
 const agent = new https.Agent({
@@ -17,27 +18,12 @@ const OrderFeatures = () => {
 		try {
 			const result = await axs.get("/getExcel/GetExcel", {
 				responseType: "arraybuffer",
-			}) // Specify responseType as "arraybuffer"
-
-			const blob = new Blob([result.data], {
-				type:
-					"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 			})
-			const url = URL.createObjectURL(blob)
-
-			let link = document.createElement("a")
-			link.href = url
-			link.download = "OrderList.xlsx" // Change the file extension to xlsx
-			document.body.appendChild(link)
-			link.dispatchEvent(
-				new MouseEvent("click", {
-					bubbles: true,
-					cancelable: true,
-					view: window,
-				})
-			)
-			link.remove()
-			window.URL.revokeObjectURL(link.href)
+			console.log(result)
+			const blob = new Blob([result.data], {
+				type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			});
+			saveAs(blob, 'example.xlsx');
 		} catch (error) {
 			console.error("Error downloading file", error)
 		}
