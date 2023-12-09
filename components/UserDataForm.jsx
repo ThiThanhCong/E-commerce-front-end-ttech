@@ -1,7 +1,7 @@
 "use client"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
-import { isValidEmail, isValidPhone } from "../utils/until"
+import { isValidEmail, isValidPhoneNumber } from "@/utils/until"
 import { UserAuth } from "@/context/AuthContext"
 import { handleUser } from "@/app/api/handleUser"
 import Notification from "./Notification"
@@ -42,14 +42,14 @@ const UserDataForm = () => {
 		let errorMessage = ""
 		if (!value.trim()) {
 			errorMessage = `Vui lòng nhập ${id === "name"
-					? "tên"
-					: id === "email"
-						? "email"
-						: "số điện thoại"
+				? "tên"
+				: id === "email"
+					? "email"
+					: "số điện thoại"
 				}`
 		} else if (id === "email" && !isValidEmail(value)) {
 			errorMessage = "Sai định dạng email"
-		} else if (id === "phone" && !isValidPhone(value)) {
+		} else if (id === "phone" && !isValidPhoneNumber(value)) {
 			errorMessage = "Số điện thoại gồm 10 hoặc 11 con số"
 		}
 
