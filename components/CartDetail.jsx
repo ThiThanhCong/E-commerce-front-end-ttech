@@ -11,7 +11,8 @@ import {
 import CircleLoader from "./CircleLoader"
 
 const CartDetail = () => {
-	const { token, user } = UserAuth()
+	const token = JSON.parse(localStorage.getItem('token'))
+	const user = JSON.parse(localStorage.getItem('user'))
 	const {
 		setTotalProduct,
 		cart,

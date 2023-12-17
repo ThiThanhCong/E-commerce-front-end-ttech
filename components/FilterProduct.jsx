@@ -126,11 +126,15 @@ const FilterProduct = ({ onFilterChange, filter }) => {
 																		SortBy: "price",
 																		IsDescending: y.type === "Desc",
 																		categoryId: category_id,
+																		minPrice: priceRange.minPrice,
+																		maxPrice: priceRange.maxPrice,
 																	}
 																	: {
 																		...filter,
 																		SortBy: "price",
 																		IsDescending: y.type === "Desc",
+																		minPrice: priceRange.minPrice,
+																		maxPrice: priceRange.maxPrice,
 																	}
 															}
 														})

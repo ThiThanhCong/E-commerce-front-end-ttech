@@ -5,13 +5,15 @@ import { v4 as uuidv4 } from "uuid"
 import { handleCart } from "@/app/api/handleCart"
 import { handleDetailOrder } from "@/app/api/handleDetailOrder"
 import { handleOrder } from "@/app/api/handleOrder"
+import { handleTransaction } from "@/app/api/handleTransaction"
+
 import {
 	isValidEmail,
 	isValidPhoneNumber,
 } from "@/utils/until"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import CircleLoader from "./CircleLoader"
 
 const OrderFormData = ({ cart, setCart, totalPrice }) => {
@@ -72,11 +74,15 @@ const OrderFormData = ({ cart, setCart, totalPrice }) => {
 	}
 
 	const [loading, setLoading] = useState(false)
-
+	const [selectedPaymentType, setSelectedPaymentType] =
+		useState("")
+	const paymentTypeRef = useRef()
 	const handleSubmit = async () => {
+		const orderId = Date.now();
 		setLoading(true)
-		const orderId = uuidv4()
-		console.log(user)
+		const state =
+			selectedPaymentType === "bank" ? "banked" : "pending"
+
 		const order = {
 			order_id: orderId,
 			// createOrderAt: new Date().getTime(),
@@ -90,55 +96,27 @@ const OrderFormData = ({ cart, setCart, totalPrice }) => {
 			discount: "2",
 			delivery_fee: "0",
 		}
+		// const detailOrder = [...cart].map((x) => ({
+		// 	orderId,
+		// 	productId: x.product.product_id,
+		// 	pricePr: x.product.price,
+		// 	quantityPr: x.quantity,
+		// }))
 
-		// const cart = [
-		// 	{
-		// 		product: {
-		// 			product_id: "ABC123",
-		// 			name_pr: "Samsung Galaxy S21",
-		// 			name_serial: "GA007",
-		// 			detail:
-		// 				"6.2-inch display, 12GB RAM, 256GB storage, 64MP camera",
-		// 			price: 12000000,
-		// 			quantity_pr: 50,
-		// 			guarantee_period: 12,
-		// 			supplier_id: "SUPLLIER001",
-		// 		},
-		// 		quantity: 1,
-		// 		category: {
-		// 			category_id: "0PbC1aL2mN3oPqRs",
-		// 			category_name: "Điện thoại di động",
-		// 		},
-		// 		supplier: {
-		// 			supplier_id: "SUPLLIER001",
-		// 			supplier_name: "Samsung",
-		// 		},
-		// 		image: {
-		// 			image_id: "ABC123001",
-		// 			product_id: "ABC123",
-		// 			image_href:
-		// 				"https://localhost:7067/Upload/product/ABC123/ABC123_1.jpg",
-		// 		},
-		// 	},
-		// ]
-		console.log(cart)
-		const detailOrder = [...cart].map((x) => ({
-			orderId,
-			productId: x.product.product_id,
-			pricePr: x.product.price,
-			quantityPr: x.quantity,
-		}))
-		console.log("adding these item:", detailOrder)
 		await handleOrder.addNewOrder(order, token)
 		// await handleDetailOrder.addNewDetailOrder(
 		// 	detailOrder,
 		// 	token
 		// )
-		console.log(user)
 		await handleCart.EmptyCartUser(user, token)
 		setCart([])
 		setLoading(false)
-		router.push("/upcomming/success")
+
+		if (selectedPaymentType === "bank") {
+			const result = await handleTransaction.bank(totalPrice, orderId)
+			router.push(result)
+			return
+		} else router.push("/upcomming/success")
 	}
 
 	return (
@@ -211,10 +189,40 @@ const OrderFormData = ({ cart, setCart, totalPrice }) => {
 					></motion.textarea>
 				</div>
 
-				<div className='mt-10 text-black'>
-					<div className='flex gap-2 items-center'>
-						<div className='w-5 h-5 bg-blue-500 rounded-2xl outline outline-1 outline-blue-500 outline-offset-2'></div>
-						<h1 className='text-2xl'>Thanh toán khi nhận hàng</h1>
+				<div className='mt-10 text-black w-full'>
+					<h1 className='text-xl'>Hình thức thanh toán</h1>
+					<div className='flex items-center gap-4'>
+						<input
+							type='radio'
+							name='payment-type'
+							value='cash'
+							id='cash'
+							checked={selectedPaymentType === "cash"}
+							onChange={() => {
+								setSelectedPaymentType("cash")
+								paymentTypeRef.current.focus()
+							}}
+						/>
+						<label htmlFor='cash' className='text-2xl'>
+							Thanh toán khi nhận hàng
+						</label>
+					</div>
+					<div className='flex items-center gap-4'>
+						<input
+							type='radio'
+							name='payment-type'
+							value='bank'
+							id='bank'
+							checked={selectedPaymentType === "bank"}
+							onChange={() => {
+								setSelectedPaymentType("bank")
+								paymentTypeRef.current.focus()
+							}}
+							ref={paymentTypeRef} // Set the ref here for the second radio input element. This will allow us to focus on it after selecting it.
+						/>
+						<label htmlFor='bank' className='text-2xl'>
+							Chuyển khoản ngân hàng
+						</label>
 					</div>
 				</div>
 
