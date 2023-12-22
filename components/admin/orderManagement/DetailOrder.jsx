@@ -44,6 +44,7 @@ const DetailOrder = ({
 		};
 
 		await handleOrder.updateStateOrder(realData, token)
+
 		setCurrentOrderClick({})
 		setTrigger((pre) => !pre)
 	}

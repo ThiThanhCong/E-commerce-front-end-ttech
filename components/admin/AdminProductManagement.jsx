@@ -154,6 +154,7 @@ const AdminProductManagement = () => {
 							category={category}
 							setCategory={setCategory}
 							supplier={supplier}
+							setTrigger={setTrigger}
 							setSupplier={setSupplier}
 							allImageOfProduct={allImageOfProduct}
 							setAllImageOfProduct={setAllImageOfProduct}

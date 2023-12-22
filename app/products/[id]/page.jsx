@@ -3,6 +3,7 @@
 import { handleProduct } from "@/app/api/handleProduct"
 import CircleLoader from "@/components/CircleLoader"
 import Notification from "@/components/Notification"
+import { UserAuth } from "@/context/AuthContext"
 import { UserCart } from "@/context/CartContex"
 import {
 	convertToVND,
@@ -11,6 +12,7 @@ import {
 import { AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { handleCart } from "@/app/api/handleCart"
 import {
 	CiBookmark,
 	CiChat1,
@@ -25,7 +27,10 @@ export default function Page({ params }) {
 		UserCart()
 	const [notifications, setNotifications] =
 		useState(false)
+	const product_id = params.id
+	const { triggerRerender, setTriggerRerender } = UserCart()
 	const router = useRouter()
+	const { user, token } = UserAuth();
 	const [result, setResult] = useState({
 		product: {
 			product_id: "IPAD001",
@@ -52,6 +57,22 @@ export default function Page({ params }) {
 				"https://localhost:7067/Upload/product/IPAD001/IPAD001_1.jpg",
 		},
 	})
+	const handleOnClick = async () => {
+		const data = {
+			user_id: user?.user_id,
+			product_id: product_id,
+			quantity: 1,
+		}
+
+		console.log("runing.")
+
+		if (!token || !user?.user_id) router.push("/login")
+
+		const result = await handleCart.AddToCart(data, token)
+		setTriggerRerender(triggerRerender == 0 ? 1 : 0)
+		console.log("result order by product id ", result)
+		setNotifications(true)
+	}
 
 	const callAPI = async () => {
 		try {
@@ -175,10 +196,7 @@ export default function Page({ params }) {
 					<div>
 						<div className='my-24'>
 							<button
-								onClick={() => {
-									setNotifications(true)
-									setTotalProduct((pre) => pre + 1)
-								}}
+								onClick={handleOnClick}
 								className='w-full p-2 rounded-xl text-white text-[1.7rem] bg-blue-500 flex items-center justify-center'
 							>
 								Đặt hàng ngay

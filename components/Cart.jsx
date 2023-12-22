@@ -12,18 +12,22 @@ const Cart = () => {
 	const { totalProduct, setTotalProduct } =
 		UserCart()
 	const { user } = UserAuth()
+	const handleOnClick = () => {
+		if (user?.user_id) {
+			router.push("/cart")
+			return
+		}
 
+		router.push("/login")
+	}
 	return (
 		<motion.div
 			onClick={() => {
-				router.push(user?.user_id ? "cart" : "login")
+				handleOnClick();
 			}}
 			className='relative cursor-pointer'
 		>
 			<CiShoppingCart size={25} />
-			<div className='absolute top-0 right-0 translate-x-1/2 rounded-xl bg-blue-500/90 px-2 text-[10px] font-semibold text-white'>
-				{totalProduct}
-			</div>
 		</motion.div>
 	)
 }

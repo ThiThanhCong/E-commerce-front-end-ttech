@@ -65,18 +65,20 @@ export const AuthContextProvider = ({ children }) => {
 					.slice(0, 10)
 					.join(""),
 				password: currentUser.email,
-				isAdmin: "0",
+				role: "user"
 			}
 
 			const res_register = await handleAuth.register(
 				user_format
 			)
-
+			const loginUser = await handleAuth.login(
+				user_format
+			)
 			console.log("res_register ", res_register)
 
-			if (res_register?.token) {
-				setUser(res_register.user)
-				setToken(res_register.token)
+			if (loginUser?.token) {
+				setUser(loginUser.user)
+				setToken(loginUser.token)
 				router.push("/")
 			}
 		}

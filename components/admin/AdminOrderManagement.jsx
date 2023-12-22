@@ -50,7 +50,7 @@ const AdminOrderManagement = () => {
 
 	useEffect(() => {
 		getAllOrder()
-	}, [setTrigger])
+	}, [trigger])
 
 	const [currentOrderClick, setCurrentOrderClick] = useState(
 		{}

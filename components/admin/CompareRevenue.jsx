@@ -13,8 +13,10 @@ import {
 	getPreCurrentMonth,
 } from "../../utils/until"
 import { UserAuth } from "@/context/AuthContext"
+import { useRouter } from "next/navigation"
 
-const CompareRevenue = () => {
+const CompareRevenue = ({ searchParams }) => {
+	console.log(searchParams)
 	const token = JSON.parse(localStorage.getItem('token'))
 	const [revenue, setRevenue] = useState({
 		thisMonthRevenue: 132314256,

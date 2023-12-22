@@ -19,6 +19,6 @@ export const handleUser = {
         ),
     getUserById: async (user_id) =>
         await axiosClient.get(
-            "/User/GetUserById?userId=" + user_id
+            "/auth/getById/" + user_id
         ),
 }

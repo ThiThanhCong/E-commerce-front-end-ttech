@@ -16,7 +16,7 @@ const Page = () => {
 			onClick={() => { }}
 			className='container mx-auto'
 		>
-			<motion.div className='text-[5rem] mx-2 font-[300] uppercase h-[60px] leading-[60px]'>
+			<motion.div className='text-[4rem] md:text-[5rem] leading-[4rem] md:leading-[5rem] mx-2 font-[300] uppercase h-[60px]'>
 				<motion.div
 
 					className='w-[100vw] font-[600] flex justify-between '

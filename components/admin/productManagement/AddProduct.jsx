@@ -31,7 +31,7 @@ const AddProduct = ({
 		guarantee_period: "",
 		category_id: "",
 	})
-
+	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
 
 	const [fileImage, setFileImage] = useState([])
@@ -77,24 +77,30 @@ const AddProduct = ({
 					console.error(error);
 				}
 			}
-			await handleProductCategory.addNewProductCategory(
+
+			const rs = await handleProductCategory.addNewProductCategory(
 				productCategory, token
 			)
+			if (!rs) alert("Lỗi ở quá trình thêm sản phẩm")
+			else {
+				setData({
+					quantity_pr: "",
+					name_serial: "",
+					detail: "",
+					name_pr: "",
+					supplier_id: "",
+					price: "",
+					guarantee_period: "",
+				})
+				setFileImage([])
+				setImageListDisplay([])
+				setShow(false)
+
+			}
 
 			setTrigger((pre) => !pre)
 
-			setData({
-				quantity_pr: "",
-				name_serial: "",
-				detail: "",
-				name_pr: "",
-				supplier_id: "",
-				price: "",
-				guarantee_period: "",
-			})
-			setFileImage([])
-			setImageListDisplay([])
-			setShow(false)
+
 		} catch (error) {
 			console.log(error)
 		}

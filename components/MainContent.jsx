@@ -12,8 +12,10 @@ import ProductListAbs from "./ProductListAbs"
 import RealTimeMessage from "./RealTimeMessage"
 import AdvertisementShipping from "./advertisement/AdvertisementShipping"
 import Image from "next/image"
+import { UserAuth } from "@/context/AuthContext"
 
 const MainContent = () => {
+	const { user } = UserAuth();
 	const router = useRouter()
 	const openURL = (string) => {
 		router.push("/" + string)
@@ -81,6 +83,26 @@ const MainContent = () => {
 									Chiến game với setup mượt mà. Sẵn ngay.
 								</h1>
 							</div>
+							{user?.role === "admin" && (
+								<div
+									onClick={() => {
+										router.push("/admin")
+									}}
+									className='bg-gray-500/10 cursor-pointer mt-10 rounded-3xl p-6'
+								>
+									<Image
+										src={"/images/product_images/boy-iso-premium.png"}
+										width={0}
+										alt=''
+										height={0}
+										sizes='100vw'
+										className='w-[80%] mx-auto h-auto'
+									/>
+									<h1 className='text-3xl text-center font-[600] p-4 leading-[18px]'>
+										Vào trang admin
+									</h1>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

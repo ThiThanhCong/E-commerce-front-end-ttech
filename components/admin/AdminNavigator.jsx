@@ -7,7 +7,6 @@ export const adminRouteNavigator = [
 	"order",
 	"customer",
 	"message",
-	"discount",
 	"supplier",
 	"category",
 ]

@@ -15,6 +15,7 @@ const ProductManagementForm = ({
 	category,
 	setCategory,
 	supplier,
+	setTrigger,
 	setSupplier,
 	allImageOfProduct,
 	setAllImageOfProduct,
@@ -170,7 +171,7 @@ const ProductManagementForm = ({
 			token
 		)
 		await handleProduct.updateProduct(updatedProduct, token)
-
+		setTrigger(pre => !pre)
 		setNotifications(true)
 	}
 

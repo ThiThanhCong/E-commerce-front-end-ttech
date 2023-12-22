@@ -18,13 +18,15 @@ import AdminCustomerManagement from "@/components/admin/AdminCustomerManagement"
 const Page = () => {
 
 	const [route, setRoute] = useState("dashboard")
-	const { user, setUser } = UserAuth()
+	const { setUser } = UserAuth()
 	const router = useRouter()
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem("user"))
+		const token = JSON.parse(localStorage.getItem('token'))
 		console.log("user, ", user)
 		if (user?.role !== "admin" || user === null) return router.push("/upcomming/unAuthorized")
 		if (user?.user_id) setUser(user)
+		router.push(`/admin?token=${token}`)
 	}, [])
 
 	return (

@@ -84,13 +84,13 @@ const OrderFormData = ({ cart, setCart, totalPrice }) => {
 			selectedPaymentType === "bank" ? "banked" : "pending"
 
 		const order = {
-			order_id: orderId,
+			order_id: orderId.toString(),
 			// createOrderAt: new Date().getTime(),
 			user_id: user.user_id,
 			name: user.name,
 			email: user.email,
 			phone: user.phone,
-			address: "testAdd",
+			address: data.address,
 			state: "pending",
 			note: data.Note || "khong co",
 			discount: "2",

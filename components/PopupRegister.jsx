@@ -53,7 +53,9 @@ const PopupRegister = () => {
 	const handleRegister = async (e) => {
 		e.preventDefault()
 		setLoading(true)
+		const userId = uuidv4();
 		const formData = {
+			user_id: userId,
 			name: data.username,
 			phone: data.phone,
 			email: data.email,
@@ -66,10 +68,7 @@ const PopupRegister = () => {
 			const result = await handleAuth.register(
 				formData
 			)
-			const { user, token } = result
-			setUser(user)
-			setToken(token)
-			router.push("/")
+			setShowPopup(false)
 		} catch (error) {
 			console.log(error)
 		}
