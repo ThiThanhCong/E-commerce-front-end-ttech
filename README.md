@@ -29,6 +29,7 @@
 -   **Database:** [MySQL](https://www.mysql.com/)
 
 ## Repo
+-   **Repo FrontEnd**(ban đầu): https://github.com/hSangg/front_end_for_TTECH
 -   **Repo FrontEnd**: https://github.com/Aransu/Laravel-front-end
 -   **Repo BackEnd**: https://github.com/KietGia22/TechWeb_BackEnd
 
