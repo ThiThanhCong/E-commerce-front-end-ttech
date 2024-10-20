@@ -76,16 +76,13 @@ export const data_week = {
 }
 
 const AdminRevenueChart = () => {
-	const token = JSON.parse(localStorage.getItem('token'))
-	console.log(token)
 	const [choose, setChoose] = useState("Y")
 	const [data, setData] = useState(data_week)
 
 	const getRevenueByYear = async () => {
 		try {
-			console.log(token)
 			const { labels, revenues } =
-				await handleAdmin.GetRevenueByYear(2023, token)
+				await handleAdmin.GetRevenueByYear(2023)
 			const data_year = {
 				labels,
 				datasets: [
@@ -103,7 +100,7 @@ const AdminRevenueChart = () => {
 	const getRevenueByWeek = async () => {
 		try {
 			const { day, revenue } =
-				await handleAdmin.GetRevenueByWeek(token)
+				await handleAdmin.GetRevenueByWeek()
 			const data_week = {
 				labels: day,
 				datasets: [
@@ -123,8 +120,8 @@ const AdminRevenueChart = () => {
 
 	useEffect(() => {
 		if (choose === "Y") {
-			getRevenueByYear(token)
-		} else if (choose === "W") getRevenueByWeek(token)
+			getRevenueByYear()
+		} else if (choose === "W") getRevenueByWeek()
 	}, [choose])
 
 	return (

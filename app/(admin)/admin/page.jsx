@@ -19,15 +19,16 @@ const Page = () => {
 
 	const [route, setRoute] = useState("dashboard")
 	const { setUser } = UserAuth()
+
 	const router = useRouter()
 	useEffect(() => {
-		const user = JSON.parse(localStorage.getItem("user"))
-		const token = JSON.parse(localStorage.getItem('token'))
-		console.log("user, ", user)
-		if (user?.role !== "admin" || user === null) return router.push("/upcomming/unAuthorized")
-		if (user?.user_id) setUser(user)
-		router.push(`/admin?token=${token}`)
-	}, [])
+		if (localStorage.getItem("user")) {
+			const user = JSON.parse(localStorage.getItem("user"))
+			if (user?.role !== "admin" || user === null) return router.push("/upcomming/unAuthorized")
+			if (user?.user_id) setUser(user)
+			router.push(`/admin`)
+		}
+	}, [setUser, router])
 
 	return (
 		<div className='container mx-auto'>

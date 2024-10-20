@@ -8,11 +8,10 @@ const CountingInfor = () => {
 		user: 0,
 		order: 0,
 	})
-	const token = JSON.parse(localStorage.getItem('token'))
 	const getTotalInfor = async () => {
 		try {
-			const user = await handleAdmin.GetTotalCustomer(token)
-			const order = await handleAdmin.GetTotalOrder(token)
+			const user = await handleAdmin.GetTotalCustomer()
+			const order = await handleAdmin.GetTotalOrder()
 
 			setInfor({
 				user,

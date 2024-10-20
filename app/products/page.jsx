@@ -26,27 +26,28 @@ export default function Page({ searchParams }) {
 		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
 	])
 
-	const getProduct = async () => {
+	const getProduct = useCallback(async () => {
 		const newFilter = {
 			...searchParams,
-			IsDescending:
-				searchParams.IsDescending === "true" ? true : false,
-		}
-		console.log("filter: ", newFilter)
-		const result = await handleProduct.getProduct(newFilter)
-		const products = result?.Products
-		const maxPage = result?.TotalPages
-		const pageNumber = result?.PageNumber
+			IsDescending: searchParams.IsDescending === "true",
+		};
+		console.log("filter: ", newFilter);
+
+		const result = await handleProduct.getProduct(newFilter);
+		const products = result?.Products;
+		const maxPage = result?.TotalPages;
+		const pageNumber = result?.PageNumber;
+
 		console.log("this is product list", result);
-		setCurrentPage(pageNumber)
-		setTotalPages(maxPage)
+		setCurrentPage(pageNumber);
+		setTotalPages(maxPage);
 		console.log(totalPages);
 		console.log(maxPage);
-		console.log("product is", result)
-		setList(products)
+		console.log("product is", result);
+		setList(products);
 
-		setLoading(false)
-	}
+		setLoading(false);
+	}, [totalPages, searchParams]);
 
 	useEffect(() => {
 		const { priceIdentify, ...rest } = filter
@@ -56,11 +57,11 @@ export default function Page({ searchParams }) {
 			)
 			.join("&")
 		router.push("/products?" + queryString)
-	}, [filter])
+	}, [filter, router])
 
 	useEffect(() => {
 		getProduct()
-	}, [filter, searchParams])
+	}, [filter, searchParams, getProduct])
 
 	return (
 		<div className='mt-20' suppressHydrationWarning={true}>

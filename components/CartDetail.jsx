@@ -9,10 +9,14 @@ import {
 	CiCirclePlus,
 } from "react-icons/ci"
 import CircleLoader from "./CircleLoader"
-
+import Image from "next/image"
+import { useEffect } from "react"
 const CartDetail = () => {
-	const token = JSON.parse(localStorage.getItem('token'))
-	const user = JSON.parse(localStorage.getItem('user'))
+	let user = null
+	useEffect(() => {
+		if (localStorage.getItem("user"))
+			user = JSON.parse(localStorage.getItem('user'))
+	}, [])
 	const {
 		setTotalProduct,
 		cart,
@@ -39,8 +43,7 @@ const CartDetail = () => {
 				user_id: user.user_id,
 				product_id: updatedProduct.product.product_id,
 				quantity: newQuantity,
-			},
-			token
+			}
 		)
 
 		if (newQuantity === 0) {
@@ -106,10 +109,13 @@ const CartDetail = () => {
 							{loading ? (
 								<CircleLoader />
 							) : (
-								<img
+								<Image
 									src={x?.product?.image[0]?.image_path}
 									alt="no image here chicken"
-									className='w-full h-full object-cover p-4 rounded-2xl'
+									layout="responsive"
+									width={500}
+									height={500}
+									className='p-4 rounded-2xl object-cover'
 								/>
 							)}
 						</div>

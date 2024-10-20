@@ -12,12 +12,9 @@ import {
 	getCurrentMonth,
 	getPreCurrentMonth,
 } from "../../utils/until"
-import { UserAuth } from "@/context/AuthContext"
-import { useRouter } from "next/navigation"
 
 const CompareRevenue = ({ searchParams }) => {
 	console.log(searchParams)
-	const token = JSON.parse(localStorage.getItem('token'))
 	const [revenue, setRevenue] = useState({
 		thisMonthRevenue: 132314256,
 		lastMonthRevenue: 0,
@@ -25,7 +22,7 @@ const CompareRevenue = ({ searchParams }) => {
 	})
 
 	const getData = async () => {
-		const response = await handleAdmin.GetRevenue(token)
+		const response = await handleAdmin.GetRevenue()
 		setRevenue(response)
 	}
 

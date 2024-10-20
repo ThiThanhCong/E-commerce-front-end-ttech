@@ -23,7 +23,7 @@ const AdminDashboard = () => {
 			</div>
 			<div className='flex'>
 				<AdminVisitorChart />
-				<BestSellProduct />
+				{/* <BestSellProduct /> */}
 			</div>
 		</div>
 	)

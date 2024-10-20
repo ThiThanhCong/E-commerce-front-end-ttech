@@ -15,11 +15,6 @@ const Header = () => {
 	const { user, setUser } = UserAuth()
 	const { token, setToken } = UserAuth();
 
-	// useEffect(() => {
-	// 	setUser(JSON.parse(localStorage.getItem('user')))
-	// 	console.log("runned");
-	// 	setToken(JSON.parse(localStorage.getItem('token')))
-	// }, [])
 	const getAllCategory = async () => {
 		try {
 			const result = await handleCategory.getAllCategories()

@@ -13,7 +13,7 @@ const UserDataForm = () => {
 
 	useEffect(() => {
 		setFormData(user)
-	}, [])
+	}, [user])
 
 	const [formData, setFormData] = useState({})
 

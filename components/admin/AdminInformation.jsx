@@ -9,38 +9,33 @@ const AdminInformation = () => {
 	const listRef = useRef(null)
 
 	useEffect(() => {
-		let timer
+		let timer;
+		const listElement = listRef.current;
+
 		const handleMouseLeave = () => {
 			timer = setTimeout(() => {
-				setShowList(false)
-			}, 2000)
-		}
+				setShowList(false);
+			}, 2000);
+		};
 
 		const handleMouseEnter = () => {
-			clearTimeout(timer)
-		}
+			clearTimeout(timer);
+		};
 
-		listRef.current?.addEventListener(
-			"mouseleave",
-			handleMouseLeave
-		)
-		listRef.current?.addEventListener(
-			"mouseenter",
-			handleMouseEnter
-		)
+		if (listElement) {
+			listElement.addEventListener("mouseleave", handleMouseLeave);
+			listElement.addEventListener("mouseenter", handleMouseEnter);
+		}
 
 		return () => {
-			listRef.current?.removeEventListener(
-				"mouseleave",
-				handleMouseLeave
-			)
-			listRef.current?.removeEventListener(
-				"mouseenter",
-				handleMouseEnter
-			)
-			clearTimeout(timer)
-		}
-	}, [showList])
+			if (listElement) {
+				listElement.removeEventListener("mouseleave", handleMouseLeave);
+				listElement.removeEventListener("mouseenter", handleMouseEnter);
+			}
+			clearTimeout(timer);
+		};
+	}, [showList]);
+
 
 	return (
 		<div className='fixed right-10 top-5 z-10 w-[200px]'>

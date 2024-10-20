@@ -12,6 +12,7 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
 	async (config) => {
+		const token = localStorage.getItem("token");
 		; (config.headers = {
 			"Content-Type": "application/json",
 			"Access-Control-Allow-Origin": "*",
@@ -20,6 +21,7 @@ axiosClient.interceptors.request.use(
 			"Access-Control-Allow-Headers": "content-type",
 			"Access-Control-Allow-Methods":
 				"PUT, POST, GET, DELETE, PATCH, OPTIONS",
+			...(token ? { Authorization: `Bearer ${token}` } : {}),
 			...config.headers,
 		}),
 

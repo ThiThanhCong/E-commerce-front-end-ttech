@@ -2,32 +2,22 @@
 import { handleProduct } from "@/app/api/handleProduct"
 import { handleProductCategory } from "@/app/api/handleProductCategory"
 import Notification from "@/components/Notification"
-import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
-import { CiCircleRemove } from "react-icons/ci"
 import { IoCopyOutline } from "react-icons/io5"
-import { UserAuth } from "@/context/AuthContext"
-import { userAgent } from "next/server"
-
+import { motion } from 'framer-motion';
+import Image from "next/image"
 const ProductManagementForm = ({
 	currentProductChoose,
-	setCurrentProductChoose,
 	category,
-	setCategory,
 	supplier,
 	setTrigger,
-	setSupplier,
 	allImageOfProduct,
-	setAllImageOfProduct,
-	triggerImage,
 	setTriggerImage,
 }) => {
 	const [imageFile, setImageFile] = useState([])
 	const [imageListDisplay, setImageListDisplay] = useState(
 		[]
 	)
-	const token = JSON.parse(localStorage.getItem('token'))
-	const user = JSON.parse(localStorage.getItem('user'))
 	const [data, setData] = useState({
 		product_id: currentProductChoose?.product_id,
 		name_pr: currentProductChoose?.name_pr,
@@ -77,7 +67,7 @@ const ProductManagementForm = ({
 			category_id:
 				currentProductChoose?.category?.[0]?.category_id,
 		})
-	}, [currentProductChoose])
+	}, [currentProductChoose, data])
 
 	const handleRemoveImageOld = async (x) => {
 		try {
@@ -96,9 +86,7 @@ const ProductManagementForm = ({
 				}
 				console.log(deleteInfo)
 				await handleProduct.deleteImageOfProduct(
-					deleteInfo,
-					token
-				)
+					deleteInfo)
 				setTriggerImage((pre) => !pre)
 			}
 		} catch (error) { }
@@ -167,10 +155,8 @@ const ProductManagementForm = ({
 				category_id:
 					currentProductChoose?.category?.[0]?.category_id,
 				new_category_id: data.category_id
-			},
-			token
-		)
-		await handleProduct.updateProduct(updatedProduct, token)
+			})
+		await handleProduct.updateProduct(updatedProduct)
 		setTrigger(pre => !pre)
 		setNotifications(true)
 	}
@@ -207,9 +193,13 @@ const ProductManagementForm = ({
 						>
 							x
 						</div>
-						<img
+						<Image
 							src={x?.image_path}
-							className='w-full h-full object-cover rounded-[10px]'
+							alt="Product Image"
+							layout="responsive"
+							width={500}
+							height={500}
+							className='rounded-[10px] object-cover'
 						/>
 					</div>
 				))}
@@ -225,9 +215,13 @@ const ProductManagementForm = ({
 						>
 							x
 						</div>
-						<img
+						<Image
 							src={x.dataUrl}
-							className='w-full h-full object-cover rounded-[10px]'
+							alt="Image"
+							layout="responsive"
+							width={500}
+							height={500}
+							className='rounded-[10px] object-cover'
 						/>
 					</div>
 				))}

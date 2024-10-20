@@ -1,10 +1,7 @@
 "use client"
 
-import { handleProduct } from "@/app/api/handleProduct"
-import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import useDebounce from "@/customHook/useDeboune"
-
+import Image from "next/image"
 const ProductRenderList = ({
 	currentProductChoose,
 	setCurrentProductChoose,
@@ -32,9 +29,13 @@ const ProductRenderList = ({
 					className='flex items-start gap-2 p-2 cursor-pointer rounded-2xl'
 				>
 					<div className='w-12 h-12 shrink-0 rounded-xl bg-sky-300'>
-						<img
+						<Image
 							src={x?.image[0]?.image_path}
-							className='w-full h-full object-cover rounded-xl'
+							alt="Image"
+							layout="responsive"
+							width={500}
+							height={500}
+							className='rounded-xl object-cover'
 						/>
 					</div>
 					<div className='text-[1.4rem] whitespace-nowrap overflow-hidden text-ellipsis'>

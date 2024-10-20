@@ -36,7 +36,7 @@ const Notification = ({
 		}, 2000)
 
 		return () => clearTimeout(timmer)
-	}, [])
+	}, [setNotifications])
 
 	const styleType = () => {
 		// Controlled by selection menu

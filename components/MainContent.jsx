@@ -40,6 +40,7 @@ const MainContent = () => {
 									height={0}
 									sizes='100vw'
 									className='w-[100%] h-auto'
+									alt="Advertise image"
 								/>
 								<h1 className='text-3xl text-center font-[600] p-4 leading-[18px]'>
 									Xem toàn bộ sản phẩm
@@ -57,6 +58,7 @@ const MainContent = () => {
 									width={0}
 									height={0}
 									sizes='100vw'
+									alt="Advertise image"
 									className='w-[100%] h-auto p-[10px]'
 								/>
 								<h1 className='text-3xl text-center font-[600] p-4 leading-[18px]'>
@@ -77,6 +79,7 @@ const MainContent = () => {
 									width={0}
 									height={0}
 									sizes='100vw'
+									alt="Advertise image"
 									className='w-[100%] h-auto'
 								/>
 								<h1 className='text-3xl text-center font-[600] p-4 leading-[18px]'>

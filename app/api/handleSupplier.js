@@ -1,30 +1,15 @@
 import { axiosClient } from "./axiosClient"
 
 export const handleSupplier = {
-	getAllSupplier: async (token) => await axiosClient.get("/supplier/", { headers: { Authorization: `Bearer ${token}` } }),
+	getAllSupplier: async () => await axiosClient.get("/supplier/"),
 
-	addSupplier: async (data, token) =>
-		axiosClient.post("/supplier/create", data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json"
-			},
-		}),
-	updateSupplier: async (data, token) =>
-		await axiosClient.put("/supplier/update/" + data.supplier_id, data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json"
-			},
-		}),
-	deleteSupplier: async (id, token) =>
+	addSupplier: async (data) =>
+		axiosClient.post("/supplier/create", data),
+	updateSupplier: async (data) =>
+		await axiosClient.put("/supplier/update/" + data.supplier_id, data),
+	deleteSupplier: async (id) =>
 		await axiosClient.delete(
-			"/supplier/delete/" + id, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json"
-			},
-		}
+			"/supplier/delete/" + id
 		),
 
 }

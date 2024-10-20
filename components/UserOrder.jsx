@@ -4,15 +4,13 @@ import { handleOrder } from "@/app/api/handleOrder"
 import { UserAuth } from "@/context/AuthContext"
 import { convertToVND } from "@/utils/until"
 import { AnimatePresence, motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
     CiBoxes,
-    CiCircleChevDown,
-    CiCircleChevLeft,
     CiMaximize1,
     CiMinimize1,
 } from "react-icons/ci"
-
+import Image from "next/image"
 import { IoCopyOutline } from "react-icons/io5"
 
 const UserOrder = () => {
@@ -76,7 +74,7 @@ const UserOrder = () => {
         setShowDetail(newShowDetail)
     }
 
-    const getALlOrder = async () => {
+    const getAllOrder = useCallback(async () => {
         try {
             const result = await handleOrder.getOrderByUserId(
                 user,
@@ -87,15 +85,15 @@ const UserOrder = () => {
         } catch (error) {
             console.log(error)
         }
-    }
+    }, [token, user])
 
     function copy(text) {
         navigator.clipboard.writeText(text)
     }
 
     useEffect(() => {
-        getALlOrder()
-    }, [])
+        getAllOrder()
+    }, [getAllOrder])
 
     return (
         <div className='container mx-auto text-2xl px-4 pt-4 pb-[500px]'>
@@ -197,9 +195,13 @@ const UserOrder = () => {
                                         {x.detail_order.map((y, j) => (
                                             <div key={j} className='flex pt-6 pb-4'>
                                                 <div className='flex-1 text-center rounded-3xl'>
-                                                    <img
+
+                                                    <Image
                                                         src={y.product.image[0].image_path}
-                                                        className='h-[70px] m-auto w-[70px] object-contain rounded-3xl'
+                                                        alt="Product Image"
+                                                        width={70}
+                                                        height={70}
+                                                        className='m-auto object-contain rounded-3xl'
                                                     />
                                                 </div>
                                                 <div className='flex-[2] flex items-center text-center justify-center'>

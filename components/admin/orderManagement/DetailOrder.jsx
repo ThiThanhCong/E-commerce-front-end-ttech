@@ -3,7 +3,7 @@ import { handleOrder } from "@/app/api/handleOrder"
 import Notification from "@/components/Notification"
 import { useEffect, useState } from "react"
 import { CiMinimize1 } from "react-icons/ci"
-
+import Image from "next/image"
 const DetailOrder = ({
 	currentOrderClick,
 	setCurrentOrderClick,
@@ -16,7 +16,6 @@ const DetailOrder = ({
 
 	const [orderDetailList, setOrderDetailList] = useState([])
 
-	const token = JSON.parse(localStorage.getItem('token'))
 	const handleValueChange = (e) => {
 		const { id, value } = e.target
 		if (id === "state") {
@@ -24,16 +23,15 @@ const DetailOrder = ({
 		}
 	}
 
-	const getOrderDetailByOrderId = async () => {
-		const orderId = currentOrderClick.order_id
-		const result =
-			await handleDetailOrder.getOrderDetailByOrderId(orderId)
-		setOrderDetailList(result)
-	}
+	const getOrderDetailByOrderId = useCallback(async () => {
+		const orderId = currentOrderClick.order_id;
+		const result = await handleDetailOrder.getOrderDetailByOrderId(orderId);
+		setOrderDetailList(result);
+	}, [currentOrderClick]);
 
 	useEffect(() => {
 		getOrderDetailByOrderId()
-	}, [])
+	}, [getOrderDetailByOrderId])
 
 	const handleSubmit = async () => {
 		const orderId = currentOrderClick.order_id;
@@ -43,7 +41,7 @@ const DetailOrder = ({
 			state: State
 		};
 
-		await handleOrder.updateStateOrder(realData, token)
+		await handleOrder.updateStateOrder(realData)
 
 		setCurrentOrderClick({})
 		setTrigger((pre) => !pre)
@@ -104,9 +102,13 @@ const DetailOrder = ({
 							key={i}
 						>
 							<div className='w-[200px] h-[200px]'>
-								<img
+								<Image
 									src={x.product.image[0]?.image_path}
-									className='w-full h-full object-cover'
+									alt="Product Image"
+									layout="responsive"
+									width={500}
+									height={500}
+									className='object-cover'
 								/>
 							</div>
 							<h1 className='w-[150px] overflow-ellipsis whitespace-nowrap text-center'>

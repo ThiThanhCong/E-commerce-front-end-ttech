@@ -6,7 +6,7 @@ import { UserAuth } from "@/context/AuthContext"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
 	GoChevronLeft,
 	GoChevronRight,
@@ -15,7 +15,6 @@ import { smoothScrollHorizotal } from "../utils/until"
 import CircleLoader from "./CircleLoader"
 import Notification from "./Notification"
 import { UserCart } from "@/context/CartContex"
-
 const ProductSlide = ({
 	title,
 	imageHref,
@@ -28,7 +27,7 @@ const ProductSlide = ({
 	const [notifications, setNotifications] = useState(false)
 	const [loading, setLoading] = useState(true)
 	const { triggerRerender, setTriggerRerender } = UserCart()
-	const getProduct = async () => {
+	const getProduct = useCallback(async () => {
 		const result = await handleProduct.getProduct({
 			categoryId: categoryId,
 			pageNumber: 1,
@@ -36,11 +35,12 @@ const ProductSlide = ({
 		})
 		setList(result?.Products)
 		setLoading(false)
-	}
+	}, [categoryId])
+
 
 	useEffect(() => {
 		getProduct()
-	}, [])
+	}, [getProduct])
 
 	const containerRef = useRef()
 	const itemRef = useRef()
@@ -163,8 +163,12 @@ const ProductSlide = ({
 								{loading ? (
 									<CircleLoader />
 								) : (
-									<img
+									<Image
 										src={x?.image[0]?.image_path}
+										alt="Image product"
+										layout="responsive"
+										width={500}
+										height={500}
 										style={{
 											objectFit: "cover",
 											borderRadius: "32px",
