@@ -23,13 +23,12 @@ const ProductAction = ({
 	const [deleteMode, setDeleteMode] = useState(false)
 	const [product_id_delete, setProudct_id_delete] =
 		useState("")
-	const token = JSON.parse(localStorage.getItem('token'))
 	const handleDeleteProduct = async () => {
 		setDeleteMode((pre) => !pre)
 		if (product_id_delete === "") return
 		if (deleteMode) {
 			const product_id = product_id_delete
-			await handleProduct.deleteProduct(product_id, token)
+			await handleProduct.deleteProduct(product_id)
 			setNotifications(true)
 			setProudct_id_delete("")
 			setTrigger((pre) => !pre)

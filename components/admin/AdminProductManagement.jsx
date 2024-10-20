@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import ProductAction from "./productManagement/ProductAction"
 import ProductManagementForm from "./productManagement/ProductManagementForm"
 import ProductRenderList from "./productManagement/ProductRenderList"
@@ -77,52 +77,51 @@ const AdminProductManagement = () => {
 		]
 	)
 
-	const getAllImage = async () => {
+	const getAllImage = useCallback(async () => {
 		try {
 			const result = await handleProduct.getAllImageOfProduct(
 				currentProductChoose?.product_id
-			)
-			setAllImageOfProduct(result)
+			);
+			setAllImageOfProduct(result);
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	}, [currentProductChoose]);
 
 	useEffect(() => {
 		getAllImage()
-	}, [currentProductChoose, triggerImage])
+	}, [currentProductChoose, triggerImage, getAllImage])
 
-	const getData = async () => {
+	const getData = useCallback(async () => {
 		try {
-			console.log("token is: ", token)
-			const supplier = await handleSupplier.getAllSupplier(token)
-			const category = await handleCategory.getAllCategories()
+			const supplier = await handleSupplier.getAllSupplier();
+			const category = await handleCategory.getAllCategories();
 
-			setSupplier(supplier)
-			setCategory(category)
+			setSupplier(supplier);
+			setCategory(category);
 		} catch (error) { }
-	}
+	}, []);
 
 	useEffect(() => {
 		getData()
-	}, [])
+	}, [getData])
 
 	const filterDebounce = useDebounce(filter, 1000)
 
-	const getProduct = async () => {
+	const getProduct = useCallback(async () => {
 		try {
-			const products = await handleProduct.getProduct(filter)
-			setList(products?.Products)
-			console.log("this is the filter: ", filterDebounce)
-			console.log("this is list product: ", products)
+			const products = await handleProduct.getProduct(filter);
+			setList(products?.Products);
+			console.log("this is the filter: ", filterDebounce);
+			console.log("this is list product: ", products);
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	}, [filter, filterDebounce]);
 
 	useEffect(() => {
 		getProduct()
-	}, [filterDebounce, trigger])
+	}, [filterDebounce, trigger, getProduct])
 
 	return (
 		<>

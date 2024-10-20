@@ -1,11 +1,10 @@
 import { handleAdmin } from "@/app/api/handleAdmin"
 import useDebounce from "@/customHook/useDeboune"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { CiShoppingBasket } from "react-icons/ci"
-
+import Image from "next/image"
 const BestSellProduct = () => {
 	const [top, setTop] = useState(1)
-	const token = JSON.parse(localStorage.getItem('token'))
 	const [list, setList] = useState([
 		{
 			productId: "609bbadf-409f-48e0-9fff-4e2bea4b13f0",
@@ -20,20 +19,17 @@ const BestSellProduct = () => {
 		},
 	])
 
-	const getProductTop = async () => {
-		const result = await handleAdmin.GetTopSellerProduct(
-			debounce,
-			token
-		)
-		console.log("GetTopSellerProduct ", result)
-		setList(result)
-	}
+	const getProductTop = useCallback(async () => {
+		const result = await handleAdmin.GetTopSellerProduct(debounce);
+		console.log("GetTopSellerProduct ", result);
+		setList(result);
+	}, [debounce]);
 
 	const debounce = useDebounce(top, 500)
 
 	useEffect(() => {
 		getProductTop()
-	}, [debounce])
+	}, [debounce, getProductTop])
 	return (
 		<div className='p-4 mt-4 ml-4 grow bg-white border border-black/20 rounded-2xl'>
 			<h1 className='text-2xl flex items-center gap-2 font-[700] p-4'>
@@ -58,27 +54,27 @@ const BestSellProduct = () => {
 						Số lượng bán được
 					</div>
 				</div>
-
 				{list?.map((x, i) => {
 					return (
 						<div key={i} className='flex gap-4 '>
 							<div className='flex-1 p-2 flex items-center justify-center'>
-								<img
-									src={x.image}
-									alt=''
+								<Image
+									src={x.image.image_href}
+									alt=""
 									width={70}
 									height={70}
 								/>
 							</div>
 							<div className='flex-1 p-2 flex text-xl items-center justify-center text-center'>
-								{x.product_name}
+								{x.productName}
 							</div>
 							<div className='flex-1 p-2 flex text-xl items-center justify-center'>
-								{x.total_quantity_sold}
+								{x.totalQuantitySold}
 							</div>
 						</div>
-					)
+					);
 				})}
+
 			</div>
 		</div>
 	)

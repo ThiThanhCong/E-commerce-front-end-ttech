@@ -10,14 +10,13 @@ const SupplierForm = ({
 	triggerGetData,
 	setTriggerGetData,
 }) => {
-	const token = JSON.parse(localStorage.getItem('token'))
 	const handleSubmit = async (e) => {
 		if (mode === "add") {
 			const newSupplier = {
 				supplier_id: uuidv4(),
 				supplier_name: currentSupplierClicked.supplier_name,
 			}
-			const res = await handleSupplier.addSupplier(newSupplier, token)
+			const res = await handleSupplier.addSupplier(newSupplier)
 			console.log(res)
 		} else {
 			const updatedSupplier = {
@@ -26,7 +25,6 @@ const SupplierForm = ({
 			}
 			const res = await handleSupplier.updateSupplier(
 				updatedSupplier,
-				token
 			)
 			console.log(res)
 		}
@@ -38,7 +36,6 @@ const SupplierForm = ({
 		if (isSure == "1") {
 			await handleSupplier.deleteSupplier(
 				currentSupplierClicked.supplier_id,
-				token
 			)
 
 			alert("deleted")

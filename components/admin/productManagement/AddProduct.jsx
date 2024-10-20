@@ -9,8 +9,7 @@ import {
 	CiImageOn,
 	CiMinimize1,
 } from "react-icons/ci"
-import { v4 as uuidv4 } from "uuid"
-
+import Image from "next/image"
 const AddProduct = ({
 	show,
 	setShow,
@@ -38,7 +37,6 @@ const AddProduct = ({
 	const [imageListDisplay, setImageListDisplay] = useState(
 		[]
 	)
-	const token = JSON.parse(localStorage.getItem('token'))
 
 	const addNewProduct = async (e) => {
 		try {
@@ -56,7 +54,7 @@ const AddProduct = ({
 				supplier_id: data.supplier_id,
 			}
 
-			const productId = await handleProduct.addNewProduct(productDetail, token)
+			const productId = await handleProduct.addNewProduct(productDetail)
 
 			const productCategory = {
 				product_id: productId,
@@ -79,7 +77,7 @@ const AddProduct = ({
 			}
 
 			const rs = await handleProductCategory.addNewProductCategory(
-				productCategory, token
+				productCategory
 			)
 			if (!rs) alert("Lỗi ở quá trình thêm sản phẩm")
 			else {
@@ -139,7 +137,7 @@ const AddProduct = ({
 		return () => {
 			window.removeEventListener("keydown", handleKeyPress)
 		}
-	}, [])
+	}, [setShow])
 
 	return (
 		<AnimatePresence>
@@ -223,10 +221,12 @@ const AddProduct = ({
 											{loading ? (
 												<CircleLoader />
 											) : (
-												<img
+												<Image
 													src={x}
-													key={i}
-													className='w-full h-full object-cover rounded-3xl'
+													alt={`Image ${i + 1}`}
+													layout="fill"
+													objectFit="cover"
+													className='rounded-3xl'
 												/>
 											)}
 										</div>

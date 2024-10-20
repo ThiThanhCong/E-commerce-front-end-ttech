@@ -10,7 +10,7 @@ import {
 	useRouter,
 	useSearchParams,
 } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { CiMinimize1, CiSearch } from "react-icons/ci"
 
 const SearchBar = () => {
@@ -24,7 +24,7 @@ const SearchBar = () => {
 	const debouncedValue = useDebounce(value, 500)
 	//
 
-	const getProductBySearchParam = async () => {
+	const getProductBySearchParam = useCallback(async () => {
 		const result =
 			await handleProduct.getProduct(
 				{
@@ -32,11 +32,11 @@ const SearchBar = () => {
 				}
 			)
 		setFilteredProducts(result?.Products)
-	}
+	}, [debouncedValue])
 
 	useEffect(() => {
 		getProductBySearchParam()
-	}, [debouncedValue])
+	}, [debouncedValue, getProductBySearchParam])
 
 	const handleKeyPressEnter = (e) => {
 		if (e.key === "Enter") {

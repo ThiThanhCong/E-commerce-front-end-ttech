@@ -90,8 +90,7 @@ export const AuthContextProvider = ({ children }) => {
 		setToken("")
 
 		//remove token and user in localstorage
-		localStorage.removeItem("user")
-		localStorage.removeItem("token")
+		localStorage.clear();
 
 		// redirect to main page
 

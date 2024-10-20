@@ -19,7 +19,7 @@ import {
 	CiDeliveryTruck,
 	CiMedal,
 } from "react-icons/ci"
-
+import Image from "next/image"
 export default function Page({ params }) {
 	const [imageList, setImageList] = useState([])
 	const [loading, setLoading] = useState(true)
@@ -74,29 +74,22 @@ export default function Page({ params }) {
 		setNotifications(true)
 	}
 
-	const callAPI = async () => {
+	const callAPI = useCallback(async () => {
 		try {
-			const resultFake =
-				await handleProduct.getProducctById(params.id)
-			const images =
-				await handleProduct.getAllImageOfProduct(
-					params.id
-				)
-			// const
-			setImageList(images)
-
-			setResult(resultFake.product)
+			const resultFake = await handleProduct.getProducctById(params.id);
+			const images = await handleProduct.getAllImageOfProduct(params.id);
+			setImageList(images);
+			setResult(resultFake.product);
 			console.log("this is the result: ", resultFake);
-			setLoading(false)
+			setLoading(false);
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
+	}, [params.id]);
 
 	useEffect(() => {
-		console.log(params.id);
 		callAPI()
-	}, [])
+	}, [callAPI])
 
 	return (
 		<div className='container mx-auto pb-[100px] mt-28'>
@@ -130,9 +123,13 @@ export default function Page({ params }) {
 								key={i}
 								className='w-[200px] h-[200px] flex items-center justify-center mt-12 mb-5'
 							>
-								<img
+								<Image
 									src={x.image_path}
+									alt="Description of image"
 									className='object-cover rounded-[30px] p-4 block'
+									width={500}
+									height={300}
+									layout="responsive"
 								/>
 							</div>
 						))

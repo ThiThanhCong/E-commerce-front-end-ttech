@@ -21,15 +21,8 @@ import {
 import { BiMessageSquare } from "react-icons/bi"
 import { CiMinimize1, CiPaperplane } from "react-icons/ci"
 import { db } from "../firebaseConfig"
-import { UserAuth } from "@/context/AuthContext"
 
 const RealTimeMessage = () => {
-	let user = null;
-	let count = 0
-	while (user === null && count < 50) {
-		user = JSON.parse(localStorage.getItem('user'))
-		count++;
-	}
 	const [showBox, setShowBox] = useState(false)
 	const [newMessage, setNewMessage] = useState("")
 	const [messageList, setMessageList] = useState([])
@@ -37,7 +30,13 @@ const RealTimeMessage = () => {
 	const messagesEndRef = useRef(null)
 	const ref = useRef(null)
 	const containerRef = useRef()
+	const userRef = useRef(null);
+	let user = null
 	useEffect(() => {
+		if (localStorage.getItem('user')) {
+			userRef.current = JSON.parse(localStorage.getItem('user'));
+		}
+		user = userRef.current;
 		if (user?.user_id) {
 			const queryMessages = query(
 				messagesRef,
@@ -61,7 +60,8 @@ const RealTimeMessage = () => {
 				unsubscribe()
 			}
 		}
-	}, [])
+
+	}, [messagesRef])
 
 	useLayoutEffect(() => {
 		if (containerRef.current) {

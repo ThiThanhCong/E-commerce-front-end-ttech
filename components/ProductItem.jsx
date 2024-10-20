@@ -13,7 +13,6 @@ import CircleLoader from "./CircleLoader"
 import { useState } from "react"
 import { UserCart } from "@/context/CartContex"
 import Notification from "./Notification"
-
 const ProductItem = ({
 	product_id,
 	category_id,
@@ -66,10 +65,13 @@ const ProductItem = ({
 				{loading ? (
 					<CircleLoader />
 				) : (
-					< img
+					<Image
 						src={img_href}
-						alt='not thing here but us chicken'
-						className='rounded-[30px] full-width full-height'
+						alt="not thing here but us chicken"
+						layout="responsive"
+						width={500}
+						height={500}
+						className='rounded-[30px] object-cover'
 					/>
 				)}
 			</div>

@@ -12,7 +12,7 @@ import {
 	where,
 } from "firebase/firestore"
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { CiChat2 } from "react-icons/ci"
 
 const ADMIN_ID =
@@ -26,17 +26,17 @@ const CustomerMessage = () => {
 	const [currentRoomClick, setCurrentRoomClick] =
 		useState("")
 
-	const handleRoom = async () => {
-		const rooms = []
-		const queryMessages = query(messagesRef)
+	const handleRoom = useCallback(async () => {
+		const rooms = [];
+		const queryMessages = query(messagesRef);
 
-		const allMessage = await getDocs(queryMessages)
+		const allMessage = await getDocs(queryMessages);
 
 		allMessage.forEach((doc) => {
-			rooms.push(doc.data().roomId)
-		})
-		setRoom([...new Set(rooms)])
-	}
+			rooms.push(doc.data().roomId);
+		});
+		setRoom([...new Set(rooms)]);
+	}, [messagesRef]);
 
 	const [messageList, setMessageList] = useState(
 		[]
@@ -64,7 +64,7 @@ const CustomerMessage = () => {
 		return () => {
 			unsubscribe()
 		}
-	}, [currentRoomClick])
+	}, [currentRoomClick, messagesRef])
 
 	const handleSubmit = async (e) => {
 		if (newMessage === "") return
@@ -80,7 +80,7 @@ const CustomerMessage = () => {
 	}
 	useEffect(() => {
 		handleRoom()
-	}, [messagesRef])
+	}, [messagesRef, handleRoom])
 
 	return (
 		<div className='container mx-auto mt-10 bg-white'>

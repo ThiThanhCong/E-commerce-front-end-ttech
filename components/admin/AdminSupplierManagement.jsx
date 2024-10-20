@@ -7,14 +7,13 @@ import SupplierForm from "./supplierManagement/SupplierForm"
 const AdminSupplierManagement = () => {
 	const [supplierList, setSupplierList] = useState([])
 	const [mode, setMode] = useState("add")
-	const token = JSON.parse(localStorage.getItem('token'))
 	const [triggerGetData, setTriggerGetData] = useState(false)
 
 	const [currentSupplierClicked, setCurrentSupplierClicked] =
 		useState({})
 
 	const getData = async () => {
-		const response = await handleSupplier.getAllSupplier(token)
+		const response = await handleSupplier.getAllSupplier()
 		if (Array.isArray(response)) setSupplierList(response)
 	}
 

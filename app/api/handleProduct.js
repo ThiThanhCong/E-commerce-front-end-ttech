@@ -4,11 +4,8 @@ export const handleProduct = {
 	getProduct: async (filter) =>
 		await axiosClient.post("/product/getProduct", filter),
 
-	addNewProduct: async (data, token) =>
-		await axiosClient.post("/product/createProduct", data,
-			{
-				headers: { Authorization: `Bearer ${token}` }
-			}
+	addNewProduct: async (data) =>
+		await axiosClient.post("/product/createProduct", data
 		),
 
 	getProductBySearchParam: async (filter) =>
@@ -34,23 +31,12 @@ export const handleProduct = {
 			}
 		),
 
-	updateProduct: async (data, token) =>
-		await axiosClient.put("/product/update/" + data.product_id, data,
-			{
-				headers:
-					{ Authorization: `Bearer ${token}` },
-			}
+	updateProduct: async (data) =>
+		await axiosClient.put("/product/update/" + data.product_id, data
 		),
 
-	deleteImageOfProduct: async (data, token) =>
-		await axiosClient.post("/product/deleteImage", data,
-			{
-				headers:
-				{
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-				},
-			}),
+	deleteImageOfProduct: async (data) =>
+		await axiosClient.post("/product/deleteImage", data),
 	addImage: async (data) =>
 		await axiosClient.post(
 			"/product/addImageToProduct",
@@ -63,10 +49,9 @@ export const handleProduct = {
 				},
 			}
 		),
-	deleteProduct: async (product_id, token) =>
+	deleteProduct: async (product_id) =>
 		await axiosClient.delete(
 			"/product/delete/" + product_id, {
-			headers: { Authorization: `Bearer ${token}` },
 			"Content-Type": "application/json",
 		}
 		),

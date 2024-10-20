@@ -18,21 +18,11 @@ export const handleOrder = {
 			},
 		}),
 
-	getAllOrder: async (token) =>
-		await axiosClient.get("/order/GetAllOrder",
-			{
-				headers: { Authorization: `Bearer ${token}` }
-			}
-		),
-	updateStateOrder: async (data, token) =>
+	getAllOrder: async () =>
+		await axiosClient.get("/order/GetAllOrder"),
+	updateStateOrder: async (data) =>
 		await axiosClient.put(
-			"/order/UpdateStateOrder", data
-			, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-			}),
+			"/order/UpdateStateOrder", data),
 	getExcelFile: async () =>
 		await axiosClient.get("/order/GetExcelFileData"),
 }

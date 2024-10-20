@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import UserRenderList from "./customerManagement/UserRenderList"
 import { handleUser } from "@/app/api/handleUser"
 import { UserAuth } from "@/context/AuthContext"
@@ -19,16 +19,14 @@ const AdminCustomerManagement = () => {
 			create_at: "0001-01-01T00:00:00",
 		},
 	])
-	const getData = async () => {
-		const result = await handleUser.getAllUser(token)
-		console.log(result)
+	const getData = useCallback(async () => {
+		const result = await handleUser.getAllUser()
 		setUserList(result)
-	}
+	}, [])
 
 	useEffect(() => {
-		console.log("RUNNNNNNNNN")
 		getData()
-	}, [])
+	}, [getData])
 
 	return (
 		<div className='container mt-10'>

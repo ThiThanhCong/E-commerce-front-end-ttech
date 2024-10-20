@@ -10,7 +10,6 @@ import { UserAuth } from "@/context/AuthContext"
 
 const AdminOrderManagement = () => {
 
-	const token = JSON.parse(localStorage.getItem('token'))
 	const [orderList, setOrderList] = useState([{
 		order_id: "321312",
 		user_id: "UserEFM",
@@ -43,7 +42,7 @@ const AdminOrderManagement = () => {
 	const [trigger, setTrigger] = useState(false)
 
 	const getAllOrder = async () => {
-		const result = await handleOrder.getAllOrder(token)
+		const result = await handleOrder.getAllOrder()
 		console.log(result)
 		setOrderList(result)
 	}

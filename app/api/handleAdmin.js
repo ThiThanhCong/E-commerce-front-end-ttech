@@ -1,45 +1,19 @@
 import { axiosClient } from "./axiosClient"
 
 export const handleAdmin = {
-	GetRevenueByYear: async (year, token) =>
+	GetRevenueByYear: async (year) =>
 		await axiosClient.get(
-			"/admin/getRevenueByYear/" + year
-			, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-				}
-			}),
-	GetRevenueByWeek: async (token) =>
-		await axiosClient.get("/admin/GetRevenueByDay", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			}
-		}),
-	GetTopSellerProduct: async (count, token) =>
+			"/admin/getRevenueByYear/" + year),
+	GetRevenueByWeek: async () =>
+		await axiosClient.get("/admin/GetRevenueByDay"),
+	GetTopSellerProduct: async (count) =>
 		await axiosClient.get(
 			"/admin/GetTopSellerProduct/" + count
-			, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				}
-			}),
-	GetTotalOrder: async (token) =>
-		await axiosClient.get("/admin/GetTotalOrder", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			}
-		}),
-	GetTotalCustomer: async (token) =>
-		await axiosClient.get("/admin/GetTotalCustomer", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			}
-		}),
-	GetRevenue: async (token) =>
-		await axiosClient.get("/admin/getRevenue", {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			}
-		}),
+		),
+	GetTotalOrder: async () =>
+		await axiosClient.get("/admin/GetTotalOrder"),
+	GetTotalCustomer: async () =>
+		await axiosClient.get("/admin/GetTotalCustomer"),
+	GetRevenue: async () =>
+		await axiosClient.get("/admin/getRevenue"),
 }

@@ -13,13 +13,12 @@ const CategoryForm = ({
 	triggerGetData,
 	setTriggerGetData,
 }) => {
-	const token = JSON.parse(localStorage.getItem('token'))
 	const handleSubmit = async (e) => {
 		if (mode === "add") {
 			const newCategory = {
 				category_name: currentCategoryClicked.category_name,
 			}
-			const res = await handleCategory.addCategory(newCategory, token)
+			const res = await handleCategory.addCategory(newCategory)
 			console.log(res)
 		} else {
 			const updatedCategory = {
@@ -29,7 +28,6 @@ const CategoryForm = ({
 			const res = await handleCategory.updateCategory(
 				updatedCategory.category_id,
 				updatedCategory,
-				token
 			)
 			console.log(res)
 		}
@@ -47,7 +45,6 @@ const CategoryForm = ({
 		if (isSure == "1") {
 			await handleCategory.deleteCategory(
 				currentCategoryClicked.category_id,
-				token
 			)
 
 			setCurrentCategoryClicked({

@@ -32,12 +32,7 @@ export const handleCart = {
 
 	UpdateQuantity: async (data, token) => {
 		console.log(data)
-		await axiosClient.put("/cart/UpdateQuantity", data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json",
-			},
-		})
+		await axiosClient.put("/cart/UpdateQuantity", data)
 	},
 	EmptyCartUser: async (data, token) => {
 		console.log(data)
